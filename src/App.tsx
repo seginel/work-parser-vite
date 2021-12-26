@@ -1,7 +1,7 @@
 import './App.css'
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
-import {ZipParser} from "./components/ZipParser/ZipParser";
 import {ScreenshotGenerator} from "./components/ScreenshotGenerator/ScreenshotGenerator";
+import {FirstWorkChecker} from "./components/FirstWorkChecker/FirstWorkChecker";
 
 function App() {
 
@@ -12,7 +12,7 @@ function App() {
         <Link to='/generator'>generator</Link>
       </nav>
       <Routes>
-        <Route path="/" element={<ZipParser/>}/>
+        <Route path="/" element={<FirstWorkChecker/>}/>
         <Route path="/generator" element={<ScreenshotGenerator/>}/>
       </Routes>
     </BrowserRouter>
