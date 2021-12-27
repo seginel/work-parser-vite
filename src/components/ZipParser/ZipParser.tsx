@@ -10,10 +10,6 @@ export const ZipParser: FC<Props> = ({ onWorkLoad }) => {
     const onChangeFile = async (event: any) => {
         const zipContent = await JSZip.loadAsync(event.target.files[0]);
 
-        console.log(zipContent);
-
-        // todo remove folder prefix
-
         const fileList = Object.keys(zipContent.files);
 
         if (zipContent.files[fileList[0]].dir) {

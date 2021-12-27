@@ -1,28 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ZipParser } from '../ZipParser/ZipParser';
 import JSZip from 'jszip';
 import { FilesExistingChecker } from '../FilesExistingChecker/FilesExistingChecker';
-
-const FILE_LIST = [
-    '.editorconfig',
-    'images/',
-    'images/facebook_color_white.svg',
-    'images/feynman.png',
-    'images/header-image.png',
-    'images/instagram_color_white.svg',
-    'images/kaufman-triangle.svg',
-    'images/logo_place_footer.svg',
-    'images/logo_place_header.svg',
-    'images/vk_color_white.svg',
-    'index.html',
-    'styles/',
-    'styles/normalize.css',
-    'styles/style.css',
-    'texts.md',
-];
+import { ScreenshotMatch } from '../ScreenshotMatch/ScreenshotMatch';
+import { FILE_LIST } from '../../templates/fileList';
+import link from './../ScreenshotMatch/edge-chromium/page.png';
+import { fetchImage } from '../../utils/fetch-image.utils';
 
 export const FirstWorkChecker = () => {
     const [work, setWork] = useState<JSZip | null>(null);
+
+    // useEffect(() => {
+    //     async function f() {
+    //         const datadata = await fetchImage(link);
+    //     }
+    //
+    //     f();
+    // }, []);
 
     if (!work) {
         return <ZipParser onWorkLoad={setWork} />;
@@ -31,6 +25,7 @@ export const FirstWorkChecker = () => {
     return (
         <>
             <FilesExistingChecker zip={work} fileList={FILE_LIST} />
+            <ScreenshotMatch zip={work} />
         </>
     );
 };
