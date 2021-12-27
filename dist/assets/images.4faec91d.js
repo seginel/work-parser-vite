@@ -1,0 +1,1 @@
+var a="/assets/description.a328e7ba.png",s="/assets/digits.2db889b5.png",e="/assets/feynman.25cec199.png",n="/assets/footer.8087c529.png",t="/assets/header.0bc453ef.png",r="/assets/kaufman.7b359c57.png",g="/assets/page.09f7d05c.png";const p={description:a,feynman:e,digits:s,footer:n,header:t,kaufman:r,page:g};export{p as images};
