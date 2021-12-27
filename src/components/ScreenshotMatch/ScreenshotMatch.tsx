@@ -7,8 +7,8 @@ import { CLASS_NAMES } from '../../templates/how-to-learn/classNames';
 import html2canvas from 'html2canvas';
 import pixelmatch from 'pixelmatch';
 import { fetchImage } from '../../utils/fetch-image.utils';
-import download from 'downloadjs';
-import targetImage from './target.png';
+import { ImageResult } from './ImageResult';
+import { Collapse } from '../Collapse/Collapse';
 
 interface Props {
     zip: JSZip;
@@ -23,16 +23,19 @@ export const ScreenshotMatch: FC<Props> = ({ zip }) => {
     const [css, setCss] = useState<string>();
     const [normalize, setNormalize] = useState<string>();
     const [loaded, setLoaded] = useState(false);
+    const [screenshots, setScreenshots] = useState<Record<
+        string,
+        HTMLCanvasElement
+    > | null>(null);
+    const [diffs, setDiffs] = useState<
+        Array<{ key: string; pixelCount: number; imageData: ImageData }>
+    >([]);
 
     useEffect(() => {
         async function handleCheck() {
-            const browser = detect();
-
-            const { images } = await import(`./${browser!.name}/images.ts`);
-
             const values = Object.fromEntries(
                 await Promise.all(
-                    ['page'].map(async (key) => {
+                    CLASS_NAMES.map(async (key) => {
                         const element =
                             ref.current?.contentWindow?.document.querySelector(
                                 `.${key}`,
@@ -46,79 +49,77 @@ export const ScreenshotMatch: FC<Props> = ({ zip }) => {
                             },
                         );
 
-                        // download(
-                        //     canvas
-                        //         .toDataURL('image/png')
-                        //         .replace('image/png', 'image/octet-stream'),
-                        //     `${'target'}.png`,
-                        // );
-
                         return [key, canvas];
                     }),
                 ),
             );
 
-            const key = 'page';
-
-            const template = await fetchImage(images[key]);
-            const target: HTMLCanvasElement = values[key];
-
-            const { width, height } = template;
-
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d')!;
-
-            const result = ctx.createImageData(width, height);
-
-            const diff = pixelmatch(
-                await fetchImageAndGet(images[key]),
-                // await fetchImageAndGet(targetImage),
-                target.getContext('2d')!.getImageData(0, 0, width, height).data,
-                result.data,
-                width,
-                height,
-                { threshold: 0.1 },
-            );
-
-            const canvas2 = document.createElement('canvas');
-            const ctx2 = canvas2.getContext('2d');
-            canvas2.width = width;
-            canvas2.height = height;
-            ctx2!.putImageData(result, 0, 0);
-
-            refImg.current!.src = canvas2.toDataURL('image/png');
-
-            async function fetchImageAndGet(src: string) {
-                const image = await fetchImage(src);
-
-                const canvas = document.createElement('canvas');
-                canvas.width = image.width;
-                canvas.height = image.height;
-                const ctx = canvas.getContext('2d')!;
-
-                ctx.drawImage(image, 0, 0);
-
-                return ctx.getImageData(0, 0, width, height).data;
-            }
-
-            // renderResult();
-            //
-            // function renderResult() {
-            //     const canvas = document.createElement('canvas');
-            //     canvas.width = 100;
-            //     canvas.height = 100;
-            //     const ctx = canvas.getContext('2d');
-            //     ctx!.fillStyle = 'red';
-            //     ctx!.fillRect(0, 0, 100, 100);
-            //
-            //     refImg.current!.src = canvas.toDataURL('image/png');
-            //
-            //     console.log(canvas.toDataURL('image/png'));
-            // }
+            setScreenshots(values);
         }
 
         setTimeout(() => handleCheck(), 1000);
     }, [loaded]);
+
+    useEffect(() => {
+        async function calcDiffs() {
+            if (!screenshots) {
+                return;
+            }
+
+            const diffsValues = await Promise.all(
+                CLASS_NAMES.map(async (key) => {
+                    const browser = detect();
+
+                    const { images } = await import(
+                        `./${browser!.name}/images.ts`
+                    );
+
+                    const template = await fetchImage(images[key]);
+
+                    const target: HTMLCanvasElement = screenshots[key];
+
+                    const { width, height } = template;
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d')!;
+
+                    const result = ctx.createImageData(width, height);
+
+                    ctx.drawImage(template, 0, 0);
+
+                    const templateImage = ctx.getImageData(
+                        0,
+                        0,
+                        width,
+                        height,
+                    ).data;
+
+                    const pixelCount = pixelmatch(
+                        templateImage,
+                        target
+                            .getContext('2d')!
+                            .getImageData(0, 0, width, height).data,
+                        result.data,
+                        width,
+                        height,
+                        {
+                            threshold: 0.1,
+                            includeAA: true,
+                            diffColorAlt: [0, 0, 255],
+                        },
+                    );
+
+                    return { key, pixelCount, imageData: result };
+                }),
+            );
+
+            setDiffs(diffsValues);
+        }
+
+        calcDiffs();
+    }, [screenshots]);
 
     useEffect(() => {
         async function handleZip() {
@@ -144,14 +145,34 @@ export const ScreenshotMatch: FC<Props> = ({ zip }) => {
         <div>
             <iframe
                 ref={ref}
-                style={{ width: '100vw', height: '100vh', border: 'none' }}
+                style={{
+                    width: '100vw',
+                    height: '100vh',
+                    border: 'none',
+                    display: screenshots ? 'none' : 'block',
+                }}
                 id="myiframe"
                 srcDoc={getBodyFromHtmlWithStyle(html, css, normalize)}
             />
-            <img
-                ref={refImg}
-                style={{ objectFit: 'contain', maxWidth: '700px' }}
-            />
+            <Collapse
+                title={'Скриншоты'}
+                valid={
+                    diffs.reduce((sum, { pixelCount }) => sum + pixelCount, 0) <
+                    30000
+                }
+            >
+                {diffs.map((diff) => {
+                    return (
+                        <Collapse
+                            key={diff.key}
+                            title={`${diff.key}`}
+                            valid={diff.pixelCount < 10000}
+                        >
+                            <ImageResult {...diff} />
+                        </Collapse>
+                    );
+                })}
+            </Collapse>
         </div>
     );
 };
