@@ -6,7 +6,7 @@ import { FirstWorkChecker } from './components/FirstWorkChecker/FirstWorkChecker
 function App() {
     return (
         <div className={'App'}>
-            <BrowserRouter>
+            <BrowserRouter basename={import.meta.env.BASE_URL}>
                 <nav>
                     <Link to="/" className="link">
                         home
