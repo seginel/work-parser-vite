@@ -15,6 +15,7 @@ import {
     IFRAME_MIN_WIDTH,
 } from '../../constants/iframe.constants';
 import { delay } from '../../utils/delay.utils';
+import { getImages } from '../../utils/images.utils';
 
 export const ScreenshotGenerator = () => {
     const ref = useRef<HTMLIFrameElement>(null);
@@ -24,20 +25,28 @@ export const ScreenshotGenerator = () => {
         const browser = detect();
 
         setIframeWidth(IFRAME_MIN_WIDTH);
-        await delay(100);
+        await delay();
 
-        const images = await getImages(IFRAME_MIN_WIDTH);
+        const images = await getImages(
+            ref.current?.contentWindow?.document,
+            IFRAME_MIN_WIDTH,
+            CLASS_NAMES,
+        );
 
         setIframeWidth(IFRAME_MAX_WIDTH);
-        await delay(100);
+        await delay();
 
-        const imagesWide = await getImages(IFRAME_MAX_WIDTH);
+        const imagesWide = await getImages(
+            ref.current?.contentWindow?.document,
+            IFRAME_MAX_WIDTH,
+            CLASS_NAMES,
+        );
 
         const zip = [...images, ...imagesWide].reduce(
-            (ar, { className, image, width }) => {
+            (ar, { className, image, targetWidth }) => {
                 const imgUrl = image.toDataURL('image/png');
                 ar.file(
-                    `${browser?.name}/${width}/${className}.png`,
+                    `${browser?.name}/${targetWidth}/${className}.png`,
                     imgUrl.split('base64,')[1],
                     {
                         base64: true,
@@ -53,24 +62,6 @@ export const ScreenshotGenerator = () => {
             await zip.generateAsync({ type: 'blob' }),
             `${browser?.name}.zip`,
         );
-
-        async function getImages(width: number) {
-            return await Promise.all(
-                CLASS_NAMES.map(async (className) => {
-                    const element =
-                        ref.current?.contentWindow?.document.querySelector(
-                            `.${className}`,
-                        );
-
-                    const image = await html2canvas(element as HTMLElement, {
-                        useCORS: true,
-                        scale: 1,
-                    });
-
-                    return { className, image, width };
-                }),
-            );
-        }
     };
 
     return (

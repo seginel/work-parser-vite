@@ -1,4 +1,4 @@
-export const delay = (time: number) =>
+export const delay = (time: number = 100) =>
     new Promise<void>((resolve, reject) => {
         setTimeout(() => {
             resolve();
