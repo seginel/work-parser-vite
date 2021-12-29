@@ -6,6 +6,7 @@ import { ScreenshotMatch } from '../ScreenshotMatch/ScreenshotMatch';
 import { FILE_LIST } from '../../templates/fileList';
 import { SectionChecker } from '../SectionChecker/SectionChecker';
 import { CLASS_NAMES } from '../../templates/how-to-learn/classNames';
+import { HtmlValidation } from '../HtmlValiidation';
 
 export const FirstWorkChecker = () => {
     const [work, setWork] = useState<JSZip | null>(null);
@@ -19,11 +20,16 @@ export const FirstWorkChecker = () => {
     // }, []);
 
     if (!work) {
-        return <ZipParser onWorkLoad={setWork} />;
+        return (
+            <>
+                <ZipParser onWorkLoad={setWork} />
+            </>
+        );
     }
 
     return (
         <>
+            <HtmlValidation zip={work} />
             <FilesExistingChecker zip={work} fileList={FILE_LIST} />
             <SectionChecker zip={work} sectionList={CLASS_NAMES} />
             <ScreenshotMatch zip={work} />
