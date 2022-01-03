@@ -7,6 +7,7 @@ import { FILE_LIST } from '../../templates/fileList';
 import { SectionChecker } from '../SectionChecker/SectionChecker';
 import { CLASS_NAMES } from '../../templates/how-to-learn/classNames';
 import { HtmlValidation } from '../HtmlValidation/HtmlValiidation';
+import { BemValidation } from '../BemValidation/BemValidation';
 
 export const FirstWorkChecker = () => {
     const [work, setWork] = useState<JSZip | null>(null);
@@ -30,6 +31,7 @@ export const FirstWorkChecker = () => {
     return (
         <>
             <HtmlValidation zip={work} />
+            <BemValidation zip={work} />
             <FilesExistingChecker zip={work} fileList={FILE_LIST} />
             <SectionChecker zip={work} sectionList={CLASS_NAMES} />
             <ScreenshotMatch zip={work} />
