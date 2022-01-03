@@ -6,7 +6,7 @@ import { ScreenshotMatch } from '../ScreenshotMatch/ScreenshotMatch';
 import { FILE_LIST } from '../../templates/fileList';
 import { SectionChecker } from '../SectionChecker/SectionChecker';
 import { CLASS_NAMES } from '../../templates/how-to-learn/classNames';
-import { HtmlValidation } from '../HtmlValiidation';
+import { HtmlValidation } from '../HtmlValidation/HtmlValiidation';
 
 export const FirstWorkChecker = () => {
     const [work, setWork] = useState<JSZip | null>(null);

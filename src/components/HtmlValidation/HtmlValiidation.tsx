@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import JSZip from 'jszip';
-import { Collapse } from './Collapse/Collapse';
+import { Collapse } from '../Collapse/Collapse';
 
 interface Props {
     zip: JSZip;
@@ -15,6 +15,8 @@ interface W3CMessage {
 interface W3CResponse {
     messages: Array<W3CMessage>;
 }
+
+// https://github.com/validator/validator/wiki/Service-%C2%BB-HTTP-interface example
 
 export const HtmlValidation: FC<Props> = ({ zip }) => {
     const [state, setState] = useState<Array<W3CMessage>>([]);
