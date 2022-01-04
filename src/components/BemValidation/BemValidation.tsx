@@ -1,13 +1,10 @@
-import JSZip from 'jszip';
 import { FC } from 'react';
-import { useUnzipContent } from '../../hooks/useUnzipContent';
 import { Collapse } from '../Collapse/Collapse';
 import {
     ERROR_TRANSLATION,
     getParentPath,
     validateNode,
 } from './bem-validator';
-import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
 
 interface Props {
     html: string | undefined;

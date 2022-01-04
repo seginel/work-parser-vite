@@ -1,4 +1,4 @@
-export const FILE_LIST = [
+export const FIRST_WORK_FILE_LIST = [
     '.editorconfig',
     'images/',
     'images/facebook_color_white.svg',

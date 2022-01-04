@@ -1,6 +1,4 @@
-import JSZip from 'jszip';
 import { FC, useEffect, useState } from 'react';
-import { useUnzipContent } from '../../hooks/useUnzipContent';
 import { Collapse } from '../Collapse/Collapse';
 import { getValidityEmoji } from '../../utils/emoji.utils';
 

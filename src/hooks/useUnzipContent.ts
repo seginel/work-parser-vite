@@ -6,10 +6,9 @@ interface FileList {
     css: string[];
 }
 
-export const useUnzipContent = (zip: JSZip | null) => {
+export const useUnzipContent = (zip: JSZip | null, cssList: string[]) => {
     const [html, setHtml] = useState<string>();
     const [css, setCss] = useState<string>();
-    const [normalize, setNormalize] = useState<string>();
 
     useEffect(() => {
         async function handleZip() {
@@ -17,19 +16,17 @@ export const useUnzipContent = (zip: JSZip | null) => {
                 return;
             }
 
-            const [index, style, normalizeCss] = await Promise.all([
+            const [index, ...style] = await Promise.all([
                 zip.files['index.html'].async('text'),
-                zip.files['styles/style.css'].async('text'),
-                zip.files['styles/normalize.css'].async('text'),
+                ...cssList.map((fileName) => zip.files[fileName].async('text')),
             ]);
 
             setHtml(index);
-            setCss(style);
-            setNormalize(normalizeCss);
+            setCss(style.join(''));
         }
 
         handleZip();
-    }, [setHtml, setCss, setNormalize, zip]);
+    }, [setHtml, setCss, zip]);
 
-    return { html, css, normalize };
+    return { html, css };
 };
