@@ -7,12 +7,9 @@ import { SectionChecker } from '../SectionChecker/SectionChecker';
 import { FIRST_WORK_CLASS_NAMES } from '../../templates/how-to-learn/classNames';
 import { HtmlValidation } from '../HtmlValidation/HtmlValiidation';
 import { BemValidation } from '../BemValidation/BemValidation';
-import { FirstWorkScreenshotMatcher } from '../FirstWorkScreenshotMatcher/FirstWorkScreenshotMatcher';
-import { useUnzipContent } from '../../hooks/useUnzipContent';
 
-export const FirstWorkChecker = () => {
+export const SecondWorkChecker = () => {
     const [work, setWork] = useState<JSZip | null>(null);
-    const { html } = useUnzipContent(work);
 
     if (!work) {
         return (
@@ -24,11 +21,10 @@ export const FirstWorkChecker = () => {
 
     return (
         <>
-            <HtmlValidation html={html} />
-            <BemValidation html={html} />
+            <HtmlValidation zip={work} />
+            <BemValidation zip={work} />
             <FilesExistingChecker zip={work} fileList={FILE_LIST} />
-            <SectionChecker html={html} sectionList={FIRST_WORK_CLASS_NAMES} />
-            <FirstWorkScreenshotMatcher zip={work} />
+            <SectionChecker zip={work} sectionList={FIRST_WORK_CLASS_NAMES} />
         </>
     );
 };

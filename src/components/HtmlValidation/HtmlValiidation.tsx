@@ -3,7 +3,7 @@ import JSZip from 'jszip';
 import { Collapse } from '../Collapse/Collapse';
 
 interface Props {
-    zip: JSZip;
+    html: string | undefined;
 }
 
 interface W3CMessage {
@@ -18,17 +18,18 @@ interface W3CResponse {
 
 // https://github.com/validator/validator/wiki/Service-%C2%BB-HTTP-interface example
 
-export const HtmlValidation: FC<Props> = ({ zip }) => {
+export const HtmlValidation: FC<Props> = ({ html }) => {
     const [state, setState] = useState<Array<W3CMessage>>([]);
 
     useEffect(() => {
         async function getData() {
+            if (!html) {
+                return;
+            }
+
             const formData = new FormData();
             formData.append('out', 'json');
-            formData.append(
-                'content',
-                await zip.files['index.html'].async('text'),
-            );
+            formData.append('content', html);
 
             const response = await fetch('https://html5.validator.nu/', {
                 method: 'POST',
@@ -41,7 +42,7 @@ export const HtmlValidation: FC<Props> = ({ zip }) => {
         }
 
         getData();
-    }, [zip]);
+    }, [html]);
 
     return (
         <Collapse title={'Проверка валидатором W3C'} valid={!state.length}>

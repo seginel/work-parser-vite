@@ -10,12 +10,10 @@ import {
 import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
 
 interface Props {
-    zip: JSZip;
+    html: string | undefined;
 }
 
-export const BemValidation: FC<Props> = ({ zip }) => {
-    const { html } = useUnzipContent(zip);
-
+export const BemValidation: FC<Props> = ({ html }) => {
     if (!html) {
         return null;
     }

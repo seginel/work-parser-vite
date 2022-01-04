@@ -5,12 +5,11 @@ import { Collapse } from '../Collapse/Collapse';
 import { getValidityEmoji } from '../../utils/emoji.utils';
 
 interface Props {
-    zip: JSZip;
+    html: string | undefined;
     sectionList: string[];
 }
 
-export const SectionChecker: FC<Props> = ({ zip, sectionList }) => {
-    const { html } = useUnzipContent(zip);
+export const SectionChecker: FC<Props> = ({ html, sectionList }) => {
     const [nodes, setNodes] = useState<Array<Element> | null>(null);
 
     useEffect(() => {

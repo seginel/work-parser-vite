@@ -6,13 +6,17 @@ interface FileList {
     css: string[];
 }
 
-export const useUnzipContent = (zip: JSZip) => {
+export const useUnzipContent = (zip: JSZip | null) => {
     const [html, setHtml] = useState<string>();
     const [css, setCss] = useState<string>();
     const [normalize, setNormalize] = useState<string>();
 
     useEffect(() => {
         async function handleZip() {
+            if (!zip) {
+                return;
+            }
+
             const [index, style, normalizeCss] = await Promise.all([
                 zip.files['index.html'].async('text'),
                 zip.files['styles/style.css'].async('text'),

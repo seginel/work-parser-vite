@@ -6,6 +6,7 @@ import { FIRST_WORK_HTML_TEMPLATE } from './templates/how-to-learn/template';
 import { FIRST_WORK_CLASS_NAMES } from './templates/how-to-learn/classNames';
 import { SECOND_WORK_HTML_TEMPLATE } from './templates/how-to-learn-2/template';
 import { SECOND_WORK_CLASS_NAMES } from './templates/how-to-learn-2/classNames';
+import { SecondWorkChecker } from './components/SecondWorkChecker/SecondWorkChecker';
 
 function App() {
     return (
@@ -20,7 +21,15 @@ function App() {
                     </Link>
                 </nav>
                 <Routes>
-                    <Route path="/" element={<FirstWorkChecker />} />
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <FirstWorkChecker />
+                                <SecondWorkChecker />
+                            </>
+                        }
+                    />
                     <Route
                         path="/generator"
                         element={
