@@ -10,7 +10,11 @@ export const getBodyFromHtmlWithStyle = (
     const style = doc.createElement('style');
     style.innerHTML = `${normalizeCss} ${css} ${devMix}`;
 
-    doc.querySelector('head')?.appendChild(style);
+    doc.head.appendChild(style);
+
+    const links = Array.from(doc.head.querySelectorAll('link'));
+
+    links.forEach((link) => link.remove());
 
     return doc.documentElement.outerHTML.replaceAll(
         /\.{0,2}\/?images/g,
