@@ -1,7 +1,12 @@
-import {useEffect, useState} from "react";
-import JSZip from "jszip";
+import { useEffect, useState } from 'react';
+import JSZip from 'jszip';
 
-export const useUnzipContent = (zip: JSZip)=>{
+interface FileList {
+    html: string;
+    css: string[];
+}
+
+export const useUnzipContent = (zip: JSZip) => {
     const [html, setHtml] = useState<string>();
     const [css, setCss] = useState<string>();
     const [normalize, setNormalize] = useState<string>();
@@ -22,5 +27,5 @@ export const useUnzipContent = (zip: JSZip)=>{
         handleZip();
     }, [setHtml, setCss, setNormalize, zip]);
 
-    return {html, css, normalize}
-}
+    return { html, css, normalize };
+};

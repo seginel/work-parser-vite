@@ -3,16 +3,13 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
 import * as React from 'react';
 import { detect } from 'detect-browser';
-import { CLASS_NAMES } from '../../templates/how-to-learn/classNames';
-import html2canvas from 'html2canvas';
+import { FIRST_WORK_CLASS_NAMES } from '../../templates/how-to-learn/classNames';
 import pixelmatch from 'pixelmatch';
 import { fetchImage } from '../../utils/fetch-image.utils';
 import { ImageResult } from './ImageResult';
 import { Collapse } from '../Collapse/Collapse';
 import { useUnzipContent } from '../../hooks/useUnzipContent';
 import { IframeSrcDoc } from '../IframeSrcDoc/IframeSrcDoc';
-import { Simulate } from 'react-dom/test-utils';
-import load = Simulate.load;
 import {
     IFRAME_MAX_WIDTH,
     IFRAME_MIN_WIDTH,
@@ -53,7 +50,7 @@ export const ScreenshotMatch: FC<Props> = ({ zip }) => {
             const images = await getImages(
                 ref.current?.contentWindow?.document,
                 IFRAME_MIN_WIDTH,
-                CLASS_NAMES,
+                FIRST_WORK_CLASS_NAMES,
             );
 
             setIframeWidth(IFRAME_MAX_WIDTH);
@@ -62,7 +59,7 @@ export const ScreenshotMatch: FC<Props> = ({ zip }) => {
             const imagesWide = await getImages(
                 ref.current?.contentWindow?.document,
                 IFRAME_MAX_WIDTH,
-                CLASS_NAMES,
+                FIRST_WORK_CLASS_NAMES,
             );
 
             setScreenshots([...images, ...imagesWide]);

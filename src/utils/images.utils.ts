@@ -1,4 +1,3 @@
-import { CLASS_NAMES } from '../templates/how-to-learn/classNames';
 import html2canvas from 'html2canvas';
 
 export async function getImages(

@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const BemValidation: FC<Props> = ({ zip }) => {
-    const { html, css, normalize } = useUnzipContent(zip);
+    const { html } = useUnzipContent(zip);
 
     if (!html) {
         return null;

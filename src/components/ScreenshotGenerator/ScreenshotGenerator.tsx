@@ -1,13 +1,9 @@
 /* eslint-disable */
 
 import * as React from 'react';
-import { useRef, useState } from 'react';
-import html2canvas from 'html2canvas';
-import { css, html, normalize } from '../../templates/how-to-learn/template';
+import { FC, useRef, useState } from 'react';
 import download from 'downloadjs';
-import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
 import { detect } from 'detect-browser';
-import { CLASS_NAMES } from '../../templates/how-to-learn/classNames';
 import { IframeSrcDoc } from '../IframeSrcDoc/IframeSrcDoc';
 import JSZip from 'jszip';
 import {
@@ -17,20 +13,28 @@ import {
 import { delay } from '../../utils/delay.utils';
 import { getImages } from '../../utils/images.utils';
 
-export const ScreenshotGenerator = () => {
+interface Props {
+    html: string;
+    classList: string[];
+    title: string;
+}
+
+export const ScreenshotGenerator: FC<Props> = ({ html, classList, title }) => {
     const ref = useRef<HTMLIFrameElement>(null);
     const [iframeWidth, setIframeWidth] = useState(IFRAME_MIN_WIDTH);
+    const [generationState, setGenerationState] = useState(false);
 
     const handleClick = async () => {
         const browser = detect();
 
+        setGenerationState(true);
         setIframeWidth(IFRAME_MIN_WIDTH);
         await delay();
 
         const images = await getImages(
             ref.current?.contentWindow?.document,
             IFRAME_MIN_WIDTH,
-            CLASS_NAMES,
+            classList,
         );
 
         setIframeWidth(IFRAME_MAX_WIDTH);
@@ -39,7 +43,7 @@ export const ScreenshotGenerator = () => {
         const imagesWide = await getImages(
             ref.current?.contentWindow?.document,
             IFRAME_MAX_WIDTH,
-            CLASS_NAMES,
+            classList,
         );
 
         const zip = [...images, ...imagesWide].reduce(
@@ -62,6 +66,8 @@ export const ScreenshotGenerator = () => {
             await zip.generateAsync({ type: 'blob' }),
             `${browser?.name}.zip`,
         );
+
+        setGenerationState(false);
     };
 
     return (
@@ -70,14 +76,14 @@ export const ScreenshotGenerator = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
+                maxWidth: '300px',
             }}
         >
+            <h1>{title}</h1>
             <button onClick={handleClick}>Get images</button>
-            <IframeSrcDoc
-                ref={ref}
-                html={getBodyFromHtmlWithStyle(html, css, normalize)}
-                width={iframeWidth}
-            />
+            {generationState && (
+                <IframeSrcDoc ref={ref} html={html} width={iframeWidth} />
+            )}
         </div>
     );
 };

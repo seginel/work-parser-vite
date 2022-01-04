@@ -1,4 +1,4 @@
-export const CLASS_NAMES = [
+export const FIRST_WORK_CLASS_NAMES = [
     'page',
     'header',
     'description',

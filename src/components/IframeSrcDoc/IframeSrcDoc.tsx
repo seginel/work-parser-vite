@@ -7,20 +7,22 @@ interface Props {
     width?: number;
 }
 
-export const IframeSrcDoc = React.forwardRef<HTMLIFrameElement, Props>(
-    ({ html, onLoad, width = IFRAME_MIN_WIDTH }, ref) => {
-        return (
-            <iframe
-                ref={ref}
-                style={{
-                    width: `${width}px`,
-                    minHeight: '100vh',
-                    border: 'none',
-                }}
-                id="myiframe"
-                srcDoc={html}
-                onLoad={onLoad}
-            />
-        );
-    },
+export const IframeSrcDoc = React.memo(
+    React.forwardRef<HTMLIFrameElement, Props>(
+        ({ html, onLoad, width = IFRAME_MIN_WIDTH }, ref) => {
+            return (
+                <iframe
+                    ref={ref}
+                    style={{
+                        width: `${width}px`,
+                        minHeight: '100vh',
+                        border: 'none',
+                    }}
+                    id="myiframe"
+                    srcDoc={html}
+                    onLoad={onLoad}
+                />
+            );
+        },
+    ),
 );
