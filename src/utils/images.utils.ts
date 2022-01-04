@@ -1,8 +1,9 @@
 import html2canvas from 'html2canvas';
+import { IframeSize } from '../constants/iframe.constants';
 
 export async function getImages(
     doc: Document | undefined | null,
-    targetWidth: number,
+    targetWidth: IframeSize,
     classNames: string[],
 ) {
     if (!doc) {

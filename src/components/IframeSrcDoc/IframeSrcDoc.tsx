@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { IFRAME_MIN_WIDTH } from '../../constants/iframe.constants';
+import { IframeSize } from '../../constants/iframe.constants';
 
 interface Props {
     html: string;
     onLoad?: () => void;
-    width?: number;
+    width?: IframeSize;
 }
 
 export const IframeSrcDoc = React.memo(
     React.forwardRef<HTMLIFrameElement, Props>(
-        ({ html, onLoad, width = IFRAME_MIN_WIDTH }, ref) => {
+        ({ html, onLoad, width = IframeSize.min }, ref) => {
             return (
                 <iframe
                     ref={ref}

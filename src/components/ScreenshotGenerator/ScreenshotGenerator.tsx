@@ -6,12 +6,9 @@ import download from 'downloadjs';
 import { detect } from 'detect-browser';
 import { IframeSrcDoc } from '../IframeSrcDoc/IframeSrcDoc';
 import JSZip from 'jszip';
-import {
-    IFRAME_MAX_WIDTH,
-    IFRAME_MIN_WIDTH,
-} from '../../constants/iframe.constants';
 import { delay } from '../../utils/delay.utils';
 import { getImages } from '../../utils/images.utils';
+import { IframeSize } from '../../constants/iframe.constants';
 
 interface Props {
     html: string;
@@ -21,28 +18,28 @@ interface Props {
 
 export const ScreenshotGenerator: FC<Props> = ({ html, classList, title }) => {
     const ref = useRef<HTMLIFrameElement>(null);
-    const [iframeWidth, setIframeWidth] = useState(IFRAME_MIN_WIDTH);
+    const [iframeWidth, setIframeWidth] = useState(IframeSize.min);
     const [generationState, setGenerationState] = useState(false);
 
     const handleClick = async () => {
         const browser = detect();
 
         setGenerationState(true);
-        setIframeWidth(IFRAME_MIN_WIDTH);
+        setIframeWidth(IframeSize.min);
         await delay();
 
         const images = await getImages(
             ref.current?.contentWindow?.document,
-            IFRAME_MIN_WIDTH,
+            IframeSize.min,
             classList,
         );
 
-        setIframeWidth(IFRAME_MAX_WIDTH);
+        setIframeWidth(IframeSize.max);
         await delay();
 
         const imagesWide = await getImages(
             ref.current?.contentWindow?.document,
-            IFRAME_MAX_WIDTH,
+            IframeSize.max,
             classList,
         );
 

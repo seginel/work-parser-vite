@@ -1,31 +1,23 @@
-import JSZip from 'jszip';
 import { FC, useEffect, useRef, useState } from 'react';
-import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
 import * as React from 'react';
-import { detect } from 'detect-browser';
-import { FIRST_WORK_CLASS_NAMES } from '../../templates/how-to-learn/classNames';
 import pixelmatch from 'pixelmatch';
 import { fetchImage } from '../../utils/fetch-image.utils';
 import { ImageResult } from './ImageResult';
 import { Collapse } from '../Collapse/Collapse';
-import { useUnzipContent } from '../../hooks/useUnzipContent';
 import { IframeSrcDoc } from '../IframeSrcDoc/IframeSrcDoc';
-import {
-    IFRAME_MAX_WIDTH,
-    IFRAME_MIN_WIDTH,
-} from '../../constants/iframe.constants';
+import { IframeSize } from '../../constants/iframe.constants';
 import { delay } from '../../utils/delay.utils';
 import { getImages } from '../../utils/images.utils';
 
 interface Props {
-    zip: JSZip;
+    html: string;
+    classNames: string[];
+    templates: Record<IframeSize, Record<string, string>>;
 }
 
 // todo add browser matching
 
-type a = ReturnType<typeof getImages>;
-
-export const ScreenshotMatch: FC<Props> = ({ zip }) => {
+export const ScreenshotMatch: FC<Props> = ({ html, classNames, templates }) => {
     const ref = useRef<HTMLIFrameElement>(null);
     const [loaded, setLoaded] = useState(false);
     const [screenshots, setScreenshots] = useState<Awaited<
@@ -34,32 +26,30 @@ export const ScreenshotMatch: FC<Props> = ({ zip }) => {
     const [diffs, setDiffs] = useState<
         Array<{ key: string; pixelCount: number; imageData: ImageData }>
     >([]);
-    const [iframeWidth, setIframeWidth] = useState(IFRAME_MIN_WIDTH);
+    const [iframeWidth, setIframeWidth] = useState(IframeSize.min);
 
     const [elementsCausedScroll, setElementsCausedScroll] = useState<string[]>(
         [],
     );
 
-    const { html, css, normalize } = useUnzipContent(zip);
-
     useEffect(() => {
         async function handleCheck() {
-            setIframeWidth(IFRAME_MIN_WIDTH);
+            setIframeWidth(IframeSize.min);
             await delay();
 
             const images = await getImages(
                 ref.current?.contentWindow?.document,
-                IFRAME_MIN_WIDTH,
-                FIRST_WORK_CLASS_NAMES,
+                IframeSize.min,
+                classNames,
             );
 
-            setIframeWidth(IFRAME_MAX_WIDTH);
+            setIframeWidth(IframeSize.max);
             await delay();
 
             const imagesWide = await getImages(
                 ref.current?.contentWindow?.document,
-                IFRAME_MAX_WIDTH,
-                FIRST_WORK_CLASS_NAMES,
+                IframeSize.max,
+                classNames,
             );
 
             setScreenshots([...images, ...imagesWide]);
@@ -76,14 +66,8 @@ export const ScreenshotMatch: FC<Props> = ({ zip }) => {
 
             const diffsValues = await Promise.all(
                 screenshots.map(async ({ targetWidth, className, image }) => {
-                    const browser = detect();
-
-                    const { images } = await import(
-                        `./${browser!.name}/images.ts`
-                    );
-
                     const template = await fetchImage(
-                        images[targetWidth][className],
+                        templates[targetWidth][className],
                     );
 
                     const target: HTMLCanvasElement = image;
@@ -145,16 +129,12 @@ export const ScreenshotMatch: FC<Props> = ({ zip }) => {
         );
     }, [loaded, setElementsCausedScroll, ref.current]);
 
-    if (!html || !css || !normalize) {
-        return null;
-    }
-
     return (
         <div>
             {!screenshots && (
                 <IframeSrcDoc
                     ref={ref}
-                    html={getBodyFromHtmlWithStyle(html, css, normalize)}
+                    html={html}
                     onLoad={() => setLoaded(true)}
                     width={iframeWidth}
                 />
