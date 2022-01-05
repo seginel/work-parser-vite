@@ -1090,7 +1090,10 @@ const css = `
 `;
 
 export const DEV_MIX = `
-* {animation: none !important;}
+* {
+    animation: none !important;
+    transform: none !important;
+}
 
 .video__iframe {
   background-color: black;

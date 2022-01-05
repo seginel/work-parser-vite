@@ -63,7 +63,6 @@ export const ScreenshotMatch: FC<Props> = ({ html, classNames, templates }) => {
             if (!screenshots) {
                 return;
             }
-
             const diffsValues = await Promise.all(
                 screenshots.map(async ({ targetWidth, className, image }) => {
                     const template = await fetchImage(

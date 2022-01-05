@@ -4,12 +4,12 @@ import { IframeSize } from '../../constants/iframe.constants';
 interface Props {
     html: string;
     onLoad?: () => void;
-    width?: IframeSize;
+    width: IframeSize;
 }
 
 export const IframeSrcDoc = React.memo(
     React.forwardRef<HTMLIFrameElement, Props>(
-        ({ html, onLoad, width = IframeSize.min }, ref) => {
+        ({ html, onLoad, width }, ref) => {
             return (
                 <iframe
                     ref={ref}

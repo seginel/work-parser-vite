@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ZipParser } from '../ZipParser/ZipParser';
 import JSZip from 'jszip';
 import { FilesExistingChecker } from '../FilesExistingChecker/FilesExistingChecker';
-import { FIRST_WORK_FILE_LIST } from '../../templates/fileList';
+import { FIRST_WORK_FILE_LIST } from '../../templates/how-to-learn/fileList';
 import { SectionChecker } from '../SectionChecker/SectionChecker';
 import { FIRST_WORK_CLASS_NAMES } from '../../templates/how-to-learn/classNames';
 import { HtmlValidation } from '../HtmlValidation/HtmlValiidation';

@@ -1,6 +1,4 @@
-export const SECOND_WORK_FILE_LIST = [
-    '.editorconfig',
-    'README.MD',
+export const SECOND_WORK_CSS_FILES = [
     'blocks/cards/__description/cards__description.css',
     'blocks/cards/__image/cards__image.css',
     'blocks/cards/__item/cards__item.css',
@@ -71,6 +69,12 @@ export const SECOND_WORK_FILE_LIST = [
     'blocks/video/__iframe/video__iframe.css',
     'blocks/video/__iframes/video__iframes.css',
     'blocks/video/video.css',
+];
+
+export const SECOND_WORK_FILE_LIST = [
+    '.editorconfig',
+    'README.MD',
+    ...SECOND_WORK_CSS_FILES,
     'images/cards-attention.png',
     'images/cards-competence.png',
     'images/cards-interliving.png',
