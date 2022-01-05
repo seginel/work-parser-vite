@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useAsync } from 'react-use';
+import useAsync from 'react-use/esm/useAsync';
 import { detect } from 'detect-browser';
 import { ScreenshotMatch } from '../ScreenshotMatch/ScreenshotMatch';
 import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
