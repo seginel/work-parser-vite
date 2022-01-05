@@ -1,12 +1,16 @@
 import * as React from 'react';
 import JSZip from 'jszip';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { uniqId } from '../../utils/uniq-id.utils';
 
 interface Props {
     onWorkLoad: (jszip: JSZip) => void;
+    title: string;
 }
 
-export const ZipParser: FC<Props> = ({ onWorkLoad }) => {
+export const ZipParser: FC<Props> = ({ onWorkLoad, title }) => {
+    const [state] = useState(uniqId());
+
     const onChangeFile = async (event: any) => {
         const zipContent = await JSZip.loadAsync(event.target.files[0]);
 
@@ -29,9 +33,12 @@ export const ZipParser: FC<Props> = ({ onWorkLoad }) => {
 
         onWorkLoad(zipContent);
     };
+    console.log(state);
+
     return (
         <div>
-            <input type="file" name="file" onChange={onChangeFile} />
+            <label htmlFor={state}>{title}</label>
+            <input id={state} type="file" name="file" onChange={onChangeFile} />
         </div>
     );
 };

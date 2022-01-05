@@ -34,11 +34,11 @@ function App() {
                         path="/generator"
                         element={
                             <>
-                                {/*<ScreenshotGenerator
+                                <ScreenshotGenerator
                                     title={'Генерация картинок первой работы'}
                                     html={FIRST_WORK_HTML_TEMPLATE}
                                     classList={FIRST_WORK_CLASS_NAMES}
-                                />*/}
+                                />
                                 <ScreenshotGenerator
                                     title={'Генерация картинок второй работы'}
                                     html={SECOND_WORK_HTML_TEMPLATE}

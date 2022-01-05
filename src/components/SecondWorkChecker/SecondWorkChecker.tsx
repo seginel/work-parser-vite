@@ -20,7 +20,7 @@ export const SecondWorkChecker = () => {
     if (!work) {
         return (
             <>
-                <ZipParser onWorkLoad={setWork} />
+                <ZipParser onWorkLoad={setWork} title="2 работа" />
             </>
         );
     }

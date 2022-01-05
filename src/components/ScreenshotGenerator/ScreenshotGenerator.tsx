@@ -19,7 +19,7 @@ interface Props {
 export const ScreenshotGenerator: FC<Props> = ({ html, classList, title }) => {
     const ref = useRef<HTMLIFrameElement>(null);
     const [iframeWidth, setIframeWidth] = useState(IframeSize.min);
-    const [generationState, setGenerationState] = useState(true);
+    const [generationState, setGenerationState] = useState(false);
 
     const handleClick = async () => {
         const browser = detect();
