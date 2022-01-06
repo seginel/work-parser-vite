@@ -164,7 +164,12 @@ export const ScreenshotMatch: FC<Props> = ({ html, classNames, templates }) => {
                         <Collapse
                             key={diff.key}
                             title={`${diff.key}`}
-                            valid={diff.pixelCount < 10000}
+                            valid={
+                                diff.pixelCount <
+                                diff.imageData.height *
+                                    diff.imageData.width *
+                                    0.1
+                            }
                             size={4}
                         >
                             <ImageResult {...diff} />
