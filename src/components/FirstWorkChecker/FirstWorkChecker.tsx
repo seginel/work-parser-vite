@@ -19,7 +19,7 @@ export const FirstWorkChecker = () => {
     if (!work) {
         return (
             <>
-                <ZipParser onWorkLoad={setWork} title="1 работа" />
+                <ZipParser onWorkLoad={setWork} />
             </>
         );
     }

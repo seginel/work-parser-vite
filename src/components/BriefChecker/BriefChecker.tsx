@@ -7,6 +7,7 @@ import { IframeSize } from '../../constants/iframe.constants';
 import { getKeys } from '../../utils/get-keys.utils';
 import { delay } from '../../utils/delay.utils';
 import { getRgbFromHex } from '../../utils/hex-to-rgb.utils';
+import { uniqId } from '../../utils/uniq-id.utils';
 
 interface Props {
     html?: string;
@@ -15,7 +16,7 @@ interface Props {
 }
 
 interface BriefConditionValidation extends BriefCondition {
-    errors: string[];
+    errors: JSX.Element[];
 }
 
 const IFRAME_WIDTH = IframeSize.max;
@@ -27,11 +28,11 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
 
     useEffect(() => {
         async function calculate() {
-            if (!html || !css || !ref.current) {
+            await delay(1000);
+
+            if (!html || !css || !ref.current || done) {
                 return;
             }
-
-            await delay(1000);
 
             const result = conditions.map((condition) => {
                 const { selector, css: rules = {}, count } = condition;
@@ -41,10 +42,13 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                 const element = contentWindow.document.querySelector(selector);
 
                 if (!element) {
-                    return { ...condition, errors: ['Элемент не найден'] };
+                    return {
+                        ...condition,
+                        errors: [<div key={uniqId()}>Элемент не найден</div>],
+                    };
                 }
 
-                const errors: string[] = [];
+                const errors: JSX.Element[] = [];
 
                 if (count) {
                     const nodes =
@@ -52,14 +56,17 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
 
                     if (nodes.length !== count) {
                         errors.push(
-                            `Количество элементов (${nodes.length}) не совпадает ожидаемому (${count})`,
+                            <div key={uniqId()}>
+                                Количество элементов ({nodes.length}) не
+                                совпадает ожидаемому ({count})
+                            </div>,
                         );
                     }
                 }
 
                 const styles = contentWindow.getComputedStyle(element);
 
-                getKeys(rules).forEach((key) => {
+                getKeys(rules).forEach((key, index) => {
                     const target = styles[key];
                     const template = rules[key]!;
 
@@ -70,7 +77,11 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                         case 'right':
                             if (!isEqualTwoNumericProperty(target, template)) {
                                 errors.push(
-                                    `Значение свойства ${key.toString()} равное ${target} не соответствует ожидаемому ${template}`,
+                                    <div key={uniqId()}>
+                                        Значение свойства <b>{key}</b> равное{' '}
+                                        <u>{target}</u> не соответствует
+                                        ожидаемому <u>{template}</u>
+                                    </div>,
                                 );
                             }
                             break;
@@ -91,7 +102,11 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                                 )
                             ) {
                                 errors.push(
-                                    `Значение свойства ${key.toString()} равное ${target} не соответствует ожидаемому ${lineHeightTemplateValue}`,
+                                    <div key={uniqId()}>
+                                        Значение свойства <b>{key}</b> равное{' '}
+                                        <u>{target}</u> не соответствует
+                                        ожидаемому <u>{template}</u>
+                                    </div>,
                                 );
                             }
                             break;
@@ -108,7 +123,13 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                                     )
                                 ) {
                                     errors.push(
-                                        `Значение свойства ${key.toString()} равное ${target} не соответствует ожидаемому ${template} в пересчёте из процентов (${calculatedWidth})`,
+                                        <div key={uniqId()}>
+                                            Значение свойства <b>{key}</b>{' '}
+                                            равное <u>{target}</u> не
+                                            соответствует ожидаемому{' '}
+                                            <u>{template}</u> в пересчёте из
+                                            процентов (${calculatedWidth})
+                                        </div>,
                                     );
                                 }
 
@@ -116,7 +137,11 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                             }
                             if (!isEqualTwoNumericProperty(target, template)) {
                                 errors.push(
-                                    `Значение свойства ${key.toString()} равное ${target} не соответствует ожидаемому ${template}`,
+                                    <div key={uniqId()}>
+                                        Значение свойства <b>{key}</b> равное{' '}
+                                        <u>{target}</u> не соответствует
+                                        ожидаемому <u>{template}</u>
+                                    </div>,
                                 );
                             }
 
@@ -125,9 +150,12 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                         case 'backgroundColor':
                             if (getRgbFromHex(template) !== target) {
                                 errors.push(
-                                    `Значение свойства ${key.toString()} равное ${target} не соответствует ожидаемому ${template} (${getRgbFromHex(
-                                        template,
-                                    )})`,
+                                    <div key={uniqId()}>
+                                        Значение свойства <b>{key}</b> равное{' '}
+                                        <u>{target}</u> не соответствует
+                                        ожидаемому <u>{template}</u> (
+                                        {getRgbFromHex(template)})
+                                    </div>,
                                 );
                             }
                             return;
@@ -135,7 +163,11 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                         default:
                             if (target !== template) {
                                 errors.push(
-                                    `Значение свойства ${key.toString()} равное ${target} не соответствует ожидаемому ${template}`,
+                                    <div key={uniqId()}>
+                                        Значение свойства <b>{key}</b> равное{' '}
+                                        <u>{target}</u> не соответствует
+                                        ожидаемому <u>{template}</u>
+                                    </div>,
                                 );
                             }
                     }
@@ -158,7 +190,7 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
         }
 
         calculate();
-    }, [html, css, conditions, ref.current]);
+    }, [html, css, conditions, ref.current, done]);
 
     const invalid = state.filter(({ errors }) => !!errors.length);
 
@@ -169,13 +201,33 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
     return (
         <>
             <Collapse title={'Бриф'} valid={!invalid.length}>
-                {state.map(({ errors, selector }) => (
-                    <div>
-                        <div>
-                            <b>{selector}</b>
-                        </div>
-                        <div>{errors.join(', ')}</div>
-                    </div>
+                {state.map(({ errors, selector, css: rules }, index) => (
+                    <Collapse
+                        title={selector}
+                        valid={!errors.length}
+                        size={4}
+                        initialCollapsed={false}
+                        key={selector}
+                    >
+                        {errors}
+                        {rules && (
+                            <Collapse
+                                title={'Проверки css'}
+                                size={5}
+                                valid={!errors.length}
+                            >
+                                {Object.entries(rules).map(
+                                    ([rule, value], index) => (
+                                        <div
+                                            key={`${selector}-${rule}-${index}`}
+                                        >
+                                            <b>{rule}</b>: <u>{value}</u>
+                                        </div>
+                                    ),
+                                )}
+                            </Collapse>
+                        )}
+                    </Collapse>
                 ))}
             </Collapse>
             {!done && (

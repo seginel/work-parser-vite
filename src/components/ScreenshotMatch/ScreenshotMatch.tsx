@@ -144,8 +144,8 @@ export const ScreenshotMatch: FC<Props> = ({ html, classNames, templates }) => {
             >
                 {elementsCausedScroll.length ? (
                     <div>
-                        {elementsCausedScroll.map((element) => (
-                            <div>{element}</div>
+                        {elementsCausedScroll.map((element, index) => (
+                            <div key={index}>{element}</div>
                         ))}
                     </div>
                 ) : (
@@ -165,7 +165,7 @@ export const ScreenshotMatch: FC<Props> = ({ html, classNames, templates }) => {
                             key={diff.key}
                             title={`${diff.key}`}
                             valid={diff.pixelCount < 10000}
-                            size={3}
+                            size={4}
                         >
                             <ImageResult {...diff} />
                         </Collapse>

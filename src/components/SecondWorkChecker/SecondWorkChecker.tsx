@@ -12,6 +12,8 @@ import {
     SECOND_WORK_FILE_LIST,
 } from '../../templates/how-to-learn-2/fileList';
 import { SecondWorkScreenshotMatcher } from '../SecondWorkScreenshotMatcher/SecondWorkScreenshotMatcher';
+import { BriefChecker } from '../BriefChecker/BriefChecker';
+import { SECOND_BRIEF_CONDITIONS } from '../FirstBriefChecker/SecondBriefConditions';
 
 export const SecondWorkChecker = () => {
     const [work, setWork] = useState<JSZip | null>(null);
@@ -20,13 +22,18 @@ export const SecondWorkChecker = () => {
     if (!work) {
         return (
             <>
-                <ZipParser onWorkLoad={setWork} title="2 работа" />
+                <ZipParser onWorkLoad={setWork} />
             </>
         );
     }
 
     return (
         <>
+            <BriefChecker
+                conditions={SECOND_BRIEF_CONDITIONS}
+                html={html}
+                css={css}
+            />
             <HtmlValidation html={html} />
             <BemValidation html={html} />
             <FilesExistingChecker zip={work} fileList={SECOND_WORK_FILE_LIST} />
