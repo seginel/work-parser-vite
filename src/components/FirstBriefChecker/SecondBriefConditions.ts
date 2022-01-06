@@ -8,7 +8,7 @@ import {
     TWO_COLUMNS_MAIN_TEXT_CSS,
     TWO_COLUMNS_PARAGRAPH_CSS,
 } from './common';
-import { Colors } from './FirstBriefConditions';
+import { FOOTER_CONDITIONS } from './FirstBriefConditions';
 
 const HEADER_CONDITIONS: BriefCondition[] = [
     ...firstBrief.HEADER_CONDITIONS,
@@ -16,6 +16,7 @@ const HEADER_CONDITIONS: BriefCondition[] = [
         selector: '.header .rotation',
         css: {
             animationDuration: '20s',
+            animationTimingFunction: 'linear',
         },
     },
     {
@@ -108,4 +109,119 @@ const OAKLEY_CONDITIONS: BriefCondition[] = [
             ...TWO_COLUMNS_PARAGRAPH_CSS,
         },
     },
+];
+
+const KHAN_CONDITIONS: BriefCondition[] = [
+    {
+        selector: '.khan',
+    },
+    {
+        selector: '.khan .khan__container',
+        css: {
+            width: '1280px',
+        },
+    },
+    {
+        selector: '.khan .khan__author',
+        css: { lineHeight: '42px', fontSize: '30px', fontWeight: '400' },
+    },
+    {
+        selector: '.khan .khan__title',
+        css: {
+            lineHeight: '1.15',
+            fontSize: '60px',
+            fontWeight: '700',
+        },
+    },
+    {
+        selector: '.khan .khan__quote',
+        css: {
+            width: '790px',
+            lineHeight: '34px',
+            fontSize: '24px',
+            fontWeight: '400',
+        },
+    },
+    {
+        selector: '.khan .khan__quote-author',
+        css: {
+            lineHeight: '1.15',
+            fontSize: '24px',
+            fontWeight: '700',
+        },
+    },
+    {
+        selector: '.khan .khan__quote-author-subline',
+        css: {
+            lineHeight: '1.15',
+            fontSize: '24px',
+            fontWeight: '400',
+        },
+    },
+    {
+        selector: '.khan .khan__book-container',
+        css: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+        },
+    },
+    {
+        selector: '.khan .khan__book-container .khan__book-pic',
+        css: {
+            width: '620px',
+            height: '608px',
+        },
+    },
+    {
+        selector: '.khan .khan__book-container .khan__buy-link',
+        css: {
+            lineHeight: '42px',
+            fontSize: '30px',
+            fontWeight: '400',
+        },
+    },
+];
+
+const KAUFMAN_CONDITIONS: BriefCondition[] = [
+    ...firstBrief.KAUFMAN_CONDITIONS,
+    {
+        selector: '.kaufman .kaufman__triangle.rotation',
+        css: {
+            animationDuration: '20s',
+            animationTimingFunction: 'linear',
+        },
+    },
+];
+
+const RESOURCES_CONDITIONS: BriefCondition[] = [
+    { selector: '.resources' },
+    { selector: '.resources .section-title', css: SECTION_TITLE_CSS },
+    { selector: '.resources .section-subtitle', css: SECTION_SUBTITLE_CSS },
+    {
+        selector: '.resources .resources__logo-zone',
+        css: { display: 'flex', flexDirection: 'row', width: '1100px' },
+    },
+    {
+        selector: '.resources .resources__logo',
+        count: 4,
+        css: {
+            width: '270px',
+            height: '38px',
+        },
+    },
+];
+
+export const SECOND_BRIEF_CONDITIONS = [
+    ...HEADER_CONDITIONS,
+    ...firstBrief.DESCRIPTION_CONDITIONS,
+    ...TECHNIQUES_CONDITIONS,
+    ...VIDEO_CONDITIONS,
+    ...OAKLEY_CONDITIONS,
+    ...firstBrief.FEYNMAN_CONDITIONS,
+    ...firstBrief.DIGITS_CONDITIONS,
+    ...KHAN_CONDITIONS,
+    ...KAUFMAN_CONDITIONS,
+    ...RESOURCES_CONDITIONS,
+    ...FOOTER_CONDITIONS,
 ];

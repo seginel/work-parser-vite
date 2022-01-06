@@ -1,5 +1,6 @@
 import { BriefCondition } from '../../types/BriefCondtition';
 import {
+    Colors,
     SECTION_SUBTITLE_CSS,
     SECTION_TITLE_CSS,
     TWO_COLUMNS_BRIEF_CSS,
@@ -11,14 +12,6 @@ import {
 /*
  * All % values were calculated for IframeSize.max by parent element
  * */
-
-export enum Colors {
-    blue = '#2f80ed',
-    darkGray = '#1f1f1f',
-    lightGray = '#f2f2f2',
-    black = '#000000',
-    white = '#FFFFFF',
-}
 
 export const HEADER_CONDITIONS: BriefCondition[] = [
     {

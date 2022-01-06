@@ -1,4 +1,10 @@
-import { Colors } from './FirstBriefConditions';
+export enum Colors {
+    blue = '#2f80ed',
+    darkGray = '#1f1f1f',
+    lightGray = '#f2f2f2',
+    black = '#000000',
+    white = '#FFFFFF',
+}
 
 export const SECTION_TITLE_CSS = {
     width: '960px', // 60%
