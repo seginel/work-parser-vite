@@ -1,13 +1,12 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import {
-    BriefCondition,
-} from '../../types/BriefCondtition';
+import { BriefCondition } from '../../types/BriefCondtition';
 import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
 import { Collapse } from '../Collapse/Collapse';
 import { IframeSrcDoc } from '../IframeSrcDoc/IframeSrcDoc';
 import { IframeSize } from '../../constants/iframe.constants';
 import { getKeys } from '../../utils/get-keys.utils';
 import { delay } from '../../utils/delay.utils';
+import { getRgbFromHex } from '../../utils/hex-to-rgb.utils';
 
 interface Props {
     html?: string;
@@ -86,10 +85,6 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                             }
                             break;
                         case 'width':
-                            if (template === '60%') {
-                                // debugger;/**/
-                            }
-
                             if (template.includes('%')) {
                                 const calculatedWidth =
                                     (parseInt(template, 10) * IFRAME_WIDTH) /
@@ -115,6 +110,17 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                             }
 
                             return;
+                        case 'color':
+                        case 'backgroundColor':
+                            if (getRgbFromHex(template) !== target) {
+                                errors.push(
+                                    `Значение свойства ${key.toString()} равное ${target} не соответствует ожидаемому ${template} (${getRgbFromHex(
+                                        template,
+                                    )})`,
+                                );
+                            }
+                            return;
+
                         default:
                             if (target !== template) {
                                 errors.push(
