@@ -1,10 +1,18 @@
 import { BriefCondition } from '../../types/BriefCondtition';
+import {
+    SECTION_SUBTITLE_CSS,
+    SECTION_TITLE_CSS,
+    TWO_COLUMNS_BRIEF_CSS,
+    TWO_COLUMNS_CSS,
+    TWO_COLUMNS_MAIN_TEXT_CSS,
+    TWO_COLUMNS_PARAGRAPH_CSS,
+} from './common';
 
 /*
  * All % values were calculated for IframeSize.max by parent element
  * */
 
-enum Colors {
+export enum Colors {
     blue = '#2f80ed',
     darkGray = '#1f1f1f',
     lightGray = '#f2f2f2',
@@ -12,7 +20,7 @@ enum Colors {
     white = '#FFFFFF',
 }
 
-const HEADER_CONDITIONS: BriefCondition[] = [
+export const HEADER_CONDITIONS: BriefCondition[] = [
     {
         selector: '.header',
         css: {
@@ -77,35 +85,19 @@ const HEADER_CONDITIONS: BriefCondition[] = [
     },
 ];
 
-const DESCRIPTION_CONDITIONS: BriefCondition[] = [
+export const DESCRIPTION_CONDITIONS: BriefCondition[] = [
     {
         selector: '.description .two-columns',
-        css: {
-            marginTop: '100px',
-            marginBottom: '100px',
-            width: '1280px', // 80%
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-        },
+        css: TWO_COLUMNS_CSS,
     },
     {
         selector:
             '.description .two-columns .two-columns__brief' /* todo add heading */,
-        css: {
-            width: '175px',
-            lineHeight: '1.2',
-            fontSize: '18px',
-            fontWeight: '400',
-            color: Colors.blue,
-        },
+        css: TWO_COLUMNS_BRIEF_CSS,
     },
     {
         selector: '.description .two-columns .two-columns__main-text',
-        css: {
-            width: '1024px', //80% calculated by parent element
-            minWidth: '784px',
-        },
+        css: TWO_COLUMNS_MAIN_TEXT_CSS,
     },
     {
         selector:
@@ -113,9 +105,7 @@ const DESCRIPTION_CONDITIONS: BriefCondition[] = [
         count: 3,
         css: {
             marginBottom: '30px',
-            lineHeight: '34px',
-            fontSize: '24px',
-            fontWeight: '400',
+            ...TWO_COLUMNS_PARAGRAPH_CSS,
         },
     },
     {
@@ -129,7 +119,7 @@ const DESCRIPTION_CONDITIONS: BriefCondition[] = [
     },
 ];
 
-const DIGITS_CONDITIONS: BriefCondition[] = [
+export const DIGITS_CONDITIONS: BriefCondition[] = [
     {
         selector: '.digits',
         css: {
@@ -139,23 +129,11 @@ const DIGITS_CONDITIONS: BriefCondition[] = [
     },
     {
         selector: '.digits .section-title',
-        css: {
-            width: '960px', // 60%
-            textAlign: 'center',
-            lineHeight: '1.15',
-            fontSize: '60px',
-            fontWeight: '700',
-        },
+        css: SECTION_TITLE_CSS,
     },
     {
         selector: '.digits .section-subtitle',
-        css: {
-            width: '960px', // 60%
-            textAlign: 'center',
-            lineHeight: '34px',
-            fontSize: '24px',
-            fontWeight: '400',
-        },
+        css: SECTION_SUBTITLE_CSS,
     },
     {
         selector: '.digits  .table',
@@ -191,7 +169,7 @@ const DIGITS_CONDITIONS: BriefCondition[] = [
     },
 ];
 
-const FEYNMAN_CONDITIONS: BriefCondition[] = [
+export const FEYNMAN_CONDITIONS: BriefCondition[] = [
     {
         selector: '.feynman',
         css: {
@@ -229,7 +207,7 @@ const FEYNMAN_CONDITIONS: BriefCondition[] = [
     },
 ];
 
-const KAUFMAN_CONDITIONS: BriefCondition[] = [
+export const KAUFMAN_CONDITIONS: BriefCondition[] = [
     {
         selector: '.kaufman',
         css: {
@@ -239,22 +217,14 @@ const KAUFMAN_CONDITIONS: BriefCondition[] = [
     {
         selector: '.kaufman .section-title.section-title_theme_dark',
         css: {
-            width: '960px', // 60%
-            textAlign: 'center',
-            lineHeight: '1.15',
-            fontSize: '60px',
-            fontWeight: '700',
+            ...SECTION_TITLE_CSS,
             color: Colors.white,
         },
     },
     {
         selector: '.kaufman .section-subtitle.section-subtitle_theme_dark',
         css: {
-            width: '960px', // 60%
-            textAlign: 'center',
-            lineHeight: '34px',
-            fontSize: '24px',
-            fontWeight: '400',
+            ...SECTION_SUBTITLE_CSS,
             color: Colors.white,
         },
     },
@@ -305,7 +275,7 @@ const KAUFMAN_CONDITIONS: BriefCondition[] = [
     },
 ];
 
-const FOOTER_CONDITIONS: BriefCondition[] = [
+export const FOOTER_CONDITIONS: BriefCondition[] = [
     {
         selector: '.footer',
         css: {
