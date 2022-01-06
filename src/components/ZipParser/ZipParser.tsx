@@ -9,7 +9,9 @@ interface Props {
 
 export const ZipParser: FC<Props> = ({ onWorkLoad }) => {
     const onChangeFile = async (event: any) => {
-        const zipContent = await JSZip.loadAsync(event.target.files[0]);
+        const zipContent = await JSZip.loadAsync(event.target.files[0], {
+            createFolders: true,
+        });
 
         const fileList = Object.keys(zipContent.files);
 
