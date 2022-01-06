@@ -9,6 +9,8 @@ import { HtmlValidation } from '../HtmlValidation/HtmlValiidation';
 import { BemValidation } from '../BemValidation/BemValidation';
 import { FirstWorkScreenshotMatcher } from '../FirstWorkScreenshotMatcher/FirstWorkScreenshotMatcher';
 import { useUnzipContent } from '../../hooks/useUnzipContent';
+import { BriefChecker } from '../BriefChecker/BriefChecker';
+import { FIRST_BRIEF_CONDITIONS } from '../FirstBriefChecker/FirstBriefConditions';
 
 export const FirstWorkChecker = () => {
     const [work, setWork] = useState<JSZip | null>(null);
@@ -24,6 +26,11 @@ export const FirstWorkChecker = () => {
 
     return (
         <>
+            <BriefChecker
+                html={html}
+                css={css}
+                conditions={FIRST_BRIEF_CONDITIONS}
+            />
             <HtmlValidation html={html} />
             <BemValidation html={html} />
             <FilesExistingChecker zip={work} fileList={FIRST_WORK_FILE_LIST} />

@@ -44,9 +44,20 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                     return { ...condition, errors: ['Элемент не найден'] };
                 }
 
-                const styles = contentWindow.getComputedStyle(element);
-
                 const errors: string[] = [];
+
+                if (count) {
+                    const nodes =
+                        contentWindow.document.querySelectorAll(selector);
+
+                    if (nodes.length !== count) {
+                        errors.push(
+                            `Количество элементов (${nodes.length}) не совпадает ожидаемому (${count})`,
+                        );
+                    }
+                }
+
+                const styles = contentWindow.getComputedStyle(element);
 
                 getKeys(rules).forEach((key) => {
                     const target = styles[key];
@@ -157,14 +168,6 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
 
     return (
         <>
-            {!done && (
-                <IframeSrcDoc
-                    width={IframeSize.max}
-                    html={getBodyFromHtmlWithStyle(html, css)}
-                    ref={ref}
-                />
-            )}
-
             <Collapse title={'Бриф'} valid={!invalid.length}>
                 {state.map(({ errors, selector }) => (
                     <div>
@@ -175,6 +178,13 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                     </div>
                 ))}
             </Collapse>
+            {!done && (
+                <IframeSrcDoc
+                    width={IframeSize.max}
+                    html={getBodyFromHtmlWithStyle(html, css)}
+                    ref={ref}
+                />
+            )}
         </>
     );
 };
