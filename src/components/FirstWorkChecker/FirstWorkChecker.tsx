@@ -14,7 +14,7 @@ import { FIRST_BRIEF_CONDITIONS } from '../FirstBriefChecker/FirstBriefCondition
 
 export const FirstWorkChecker = () => {
     const [work, setWork] = useState<JSZip | null>(null);
-    const { html, css } = useUnzipContent(work, ['styles/style.css']);
+    const { html, css } = useUnzipContent(work, 'styles/style.css');
 
     if (!work) {
         return (

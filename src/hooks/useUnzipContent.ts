@@ -6,7 +6,7 @@ interface FileList {
     css: string[];
 }
 
-export const useUnzipContent = (zip: JSZip | null, cssList: string[]) => {
+export const useUnzipContent = (zip: JSZip | null, cssPrefix: string) => {
     const [html, setHtml] = useState<string>();
     const [css, setCss] = useState<string>();
 
@@ -16,9 +16,19 @@ export const useUnzipContent = (zip: JSZip | null, cssList: string[]) => {
                 return;
             }
 
+            const cssFileNames = Object.keys(zip.files).filter((key) => {
+                const file = zip.files[key];
+
+                if (file.dir) {
+                    return false;
+                }
+
+                return key.includes(cssPrefix);
+            });
+
             const [index, ...style] = await Promise.all([
                 zip.files['index.html'].async('text'),
-                ...cssList.map((fileName) => zip.files[fileName].async('text')),
+                ...cssFileNames.map((key) => zip.files[key].async('text')),
             ]);
 
             setHtml(index);
