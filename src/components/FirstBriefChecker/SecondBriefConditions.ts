@@ -65,7 +65,7 @@ const TECHNIQUES_CONDITIONS: BriefCondition[] = [
     },
     {
         selector: '.techniques .cards .cards__item .cards__description',
-        css: { lineHeight: '23px', fontSize: '18px', fontWeight: '23px' },
+        css: { lineHeight: '23px', fontSize: '18px', fontWeight: '400' },
     },
 ];
 
