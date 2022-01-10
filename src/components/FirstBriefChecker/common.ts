@@ -23,8 +23,6 @@ export const SECTION_SUBTITLE_CSS = {
 };
 
 export const TWO_COLUMNS_CSS = {
-    marginTop: '100px',
-    marginBottom: '100px',
     width: '1280px', // 80%
     display: 'flex',
     flexDirection: 'row',

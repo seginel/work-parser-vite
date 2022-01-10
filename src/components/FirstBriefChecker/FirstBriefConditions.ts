@@ -319,7 +319,7 @@ export const FOOTER_CONDITIONS: BriefCondition[] = [
         css: {
             lineHeight: '30px',
             fontSize: '18px',
-            fontWeight: '600',
+            fontWeight: '700',
         },
     },
     {
@@ -328,7 +328,7 @@ export const FOOTER_CONDITIONS: BriefCondition[] = [
         css: {
             lineHeight: '30px',
             fontSize: '18px',
-            fontWeight: '600',
+            fontWeight: '700',
         },
     },
     {
