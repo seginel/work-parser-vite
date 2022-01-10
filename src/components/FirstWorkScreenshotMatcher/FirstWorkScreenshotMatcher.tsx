@@ -4,6 +4,7 @@ import { detect } from 'detect-browser';
 import { ScreenshotMatch } from '../ScreenshotMatch/ScreenshotMatch';
 import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
 import { FIRST_WORK_CLASS_NAMES } from '../../templates/how-to-learn/classNames';
+import { DEV_MIX } from '../../templates/common';
 
 interface Props {
     html: string | undefined;
@@ -25,7 +26,7 @@ export const FirstWorkScreenshotMatcher: FC<Props> = ({ html, css }) => {
 
     return (
         <ScreenshotMatch
-            html={getBodyFromHtmlWithStyle(html, css)}
+            html={getBodyFromHtmlWithStyle(html, css, DEV_MIX)}
             classNames={FIRST_WORK_CLASS_NAMES}
             templates={value}
         />

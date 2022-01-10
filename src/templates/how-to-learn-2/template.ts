@@ -1,5 +1,5 @@
 import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
-import { normalizeCss } from '../normalize';
+import { DEV_MIX } from '../common';
 
 const html = `
 <!DOCTYPE html>
@@ -1087,17 +1087,6 @@ const css = `
     transform: scale(1.2);
 }
 
-`;
-
-export const DEV_MIX = `
-* {
-    animation: none !important;
-    transform: none !important;
-}
-
-.video__iframe {
-  background-color: black;
-}
 `;
 
 export const SECOND_WORK_HTML_TEMPLATE = getBodyFromHtmlWithStyle(

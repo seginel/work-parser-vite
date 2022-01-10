@@ -4,7 +4,7 @@ import { detect } from 'detect-browser';
 import { ScreenshotMatch } from '../ScreenshotMatch/ScreenshotMatch';
 import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
 import { SECOND_WORK_CLASS_NAMES } from '../../templates/how-to-learn-2/classNames';
-import { DEV_MIX } from '../../templates/how-to-learn-2/template';
+import { DEV_MIX } from '../../templates/common';
 
 interface Props {
     html: string | undefined;

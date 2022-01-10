@@ -1,5 +1,5 @@
 import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
-import { normalizeCss } from '../normalize';
+import { DEV_MIX } from '../common';
 
 export const html = `
 <!DOCTYPE html>
@@ -498,4 +498,8 @@ export const css = `
 
 `;
 
-export const FIRST_WORK_HTML_TEMPLATE = getBodyFromHtmlWithStyle(html, css);
+export const FIRST_WORK_HTML_TEMPLATE = getBodyFromHtmlWithStyle(
+    html,
+    css,
+    DEV_MIX,
+);
