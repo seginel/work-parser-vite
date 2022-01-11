@@ -2,28 +2,34 @@
 
 import * as React from 'react';
 import { FC, useRef, useState } from 'react';
-import download from 'downloadjs';
-import { detect } from 'detect-browser';
 import { IframeSrcDoc } from '../IframeSrcDoc/IframeSrcDoc';
-import JSZip from 'jszip';
 import { delay } from '../../utils/delay.utils';
 import { getImages } from '../../utils/images.utils';
 import { IframeSize } from '../../constants/iframe.constants';
+import { WorkKey } from '../../types/idb';
+import { getFileKey } from '../../utils/idb.utils';
+import { idb } from '../../hooks/useIdb';
 
 interface Props {
     html: string;
     classList: string[];
     title: string;
+    workKey: WorkKey;
+    onComplete: () => void;
 }
 
-export const ScreenshotGenerator: FC<Props> = ({ html, classList, title }) => {
+export const ScreenshotGenerator: FC<Props> = ({
+    html,
+    classList,
+    title,
+    workKey,
+    onComplete,
+}) => {
     const ref = useRef<HTMLIFrameElement>(null);
     const [iframeWidth, setIframeWidth] = useState(IframeSize.min);
     const [generationState, setGenerationState] = useState(false);
 
     const handleClick = async () => {
-        const browser = detect();
-
         setGenerationState(true);
         setIframeWidth(IframeSize.min);
         await delay();
@@ -43,28 +49,20 @@ export const ScreenshotGenerator: FC<Props> = ({ html, classList, title }) => {
             classList,
         );
 
-        const zip = [...images, ...imagesWide].reduce(
-            (ar, { className, image, targetWidth }) => {
-                const imgUrl = image.toDataURL('image/png');
-                ar.file(
-                    `${browser?.name}/${targetWidth}/${className}.png`,
-                    imgUrl.split('base64,')[1],
-                    {
-                        base64: true,
-                    },
-                );
-
-                return ar;
-            },
-            new JSZip(),
-        );
-
-        download(
-            await zip.generateAsync({ type: 'blob' }),
-            `${browser?.name}.zip`,
+        await Promise.all(
+            [...images, ...imagesWide].map(
+                ({ className, image, targetWidth }) => {
+                    idb.put(
+                        'images',
+                        image.toDataURL('image/png'),
+                        getFileKey(workKey, className, targetWidth),
+                    );
+                },
+            ),
         );
 
         setGenerationState(false);
+        onComplete();
     };
 
     return (

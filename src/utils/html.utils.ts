@@ -1,8 +1,8 @@
 import { normalizeCss } from '../templates/normalize';
 
 export const getBodyFromHtmlWithStyle = (
-    html: string,
-    css: string,
+    html: string = '',
+    css: string = '',
     devMix: string = '',
 ) => {
     const doc = new DOMParser().parseFromString(html, 'text/html');

@@ -1,19 +1,35 @@
 import './App.css';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { ScreenshotGenerator } from './components/ScreenshotGenerator/ScreenshotGenerator';
-import { FirstWorkChecker } from './components/FirstWorkChecker/FirstWorkChecker';
-import { FIRST_WORK_HTML_TEMPLATE } from './templates/how-to-learn/template';
-import { FIRST_WORK_CLASS_NAMES } from './templates/how-to-learn/classNames';
-import { SECOND_WORK_HTML_TEMPLATE } from './templates/how-to-learn-2/template';
-import { SECOND_WORK_CLASS_NAMES } from './templates/how-to-learn-2/classNames';
-import { SecondWorkChecker } from './components/SecondWorkChecker/SecondWorkChecker';
-import { useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { ValidVisibilityContext } from './context/ValidVisibilityContext';
 import { ValidVisibility } from './components/ValidVisibility/ValidVisibility';
 import { WorkCheck } from './components/WorkCheck/WorkCheck';
+import { initIdb } from './hooks/useIdb';
+import { WorkKey } from './types/idb';
+import { WorkChecker } from './components/WorkChecker/WorkChecker';
+import { FIRST_WORK_CLASS_NAMES } from './templates/how-to-learn/classNames';
+import { FIRST_WORK_FILE_LIST } from './templates/how-to-learn/fileList';
+import { FIRST_BRIEF_CONDITIONS } from './components/FirstBriefChecker/FirstBriefConditions';
+import { FIRST_WORK_HTML_TEMPLATE } from './templates/how-to-learn/template';
+import { SECOND_WORK_CLASS_NAMES } from './templates/how-to-learn-2/classNames';
+import { SECOND_WORK_FILE_LIST } from './templates/how-to-learn-2/fileList';
+import { SECOND_BRIEF_CONDITIONS } from './components/FirstBriefChecker/SecondBriefConditions';
+import { SECOND_WORK_HTML_TEMPLATE } from './templates/how-to-learn-2/template';
 
 function App() {
+    const [ready, setReady] = useState(false);
+
+    useEffect(() => {
+        initIdb().then(() => {
+            setReady(true);
+        });
+    });
+
     const [visibility, setVisibility] = useState(false);
+
+    if (!ready) {
+        return <div>Прогреваемся</div>;
+    }
 
     return (
         <div className={'App'}>
@@ -28,32 +44,25 @@ function App() {
                             element={
                                 <>
                                     <WorkCheck title={'1 работа'}>
-                                        <FirstWorkChecker />
+                                        <WorkChecker
+                                            workKey={WorkKey.first}
+                                            classList={FIRST_WORK_CLASS_NAMES}
+                                            fileList={FIRST_WORK_FILE_LIST}
+                                            brief={FIRST_BRIEF_CONDITIONS}
+                                            cssFileMask={'styles/style.css'}
+                                            template={FIRST_WORK_HTML_TEMPLATE}
+                                        />
                                     </WorkCheck>
                                     <WorkCheck title={'2 работа'}>
-                                        <SecondWorkChecker />
+                                        <WorkChecker
+                                            workKey={WorkKey.second}
+                                            classList={SECOND_WORK_CLASS_NAMES}
+                                            fileList={SECOND_WORK_FILE_LIST}
+                                            brief={SECOND_BRIEF_CONDITIONS}
+                                            cssFileMask={'blocks/'}
+                                            template={SECOND_WORK_HTML_TEMPLATE}
+                                        />
                                     </WorkCheck>
-                                </>
-                            }
-                        />
-                        <Route
-                            path="/generator"
-                            element={
-                                <>
-                                    <ScreenshotGenerator
-                                        title={
-                                            'Генерация картинок первой работы'
-                                        }
-                                        html={FIRST_WORK_HTML_TEMPLATE}
-                                        classList={FIRST_WORK_CLASS_NAMES}
-                                    />
-                                    <ScreenshotGenerator
-                                        title={
-                                            'Генерация картинок второй работы'
-                                        }
-                                        html={SECOND_WORK_HTML_TEMPLATE}
-                                        classList={SECOND_WORK_CLASS_NAMES}
-                                    />
                                 </>
                             }
                         />

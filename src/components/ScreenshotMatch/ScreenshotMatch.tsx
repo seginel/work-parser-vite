@@ -1,23 +1,24 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import * as React from 'react';
 import pixelmatch from 'pixelmatch';
-import { fetchImage } from '../../utils/fetch-image.utils';
 import { ImageResult } from './ImageResult';
 import { Collapse } from '../Collapse/Collapse';
 import { IframeSrcDoc } from '../IframeSrcDoc/IframeSrcDoc';
 import { IframeSize } from '../../constants/iframe.constants';
 import { delay } from '../../utils/delay.utils';
 import { getImages } from '../../utils/images.utils';
+import { idb } from '../../hooks/useIdb';
+import { CollectionKey, WorkKey } from '../../types/idb';
+import { getFileKey } from '../../utils/idb.utils';
+import { fetchImage } from '../../utils/fetch-image.utils';
 
 interface Props {
     html: string;
     classNames: string[];
-    templates: Record<IframeSize, Record<string, string>>;
+    workKey: WorkKey;
 }
 
-// todo add browser matching
-
-export const ScreenshotMatch: FC<Props> = ({ html, classNames, templates }) => {
+export const ScreenshotMatch: FC<Props> = ({ html, classNames, workKey }) => {
     const ref = useRef<HTMLIFrameElement>(null);
     const [loaded, setLoaded] = useState(false);
     const [screenshots, setScreenshots] = useState<Awaited<
@@ -34,6 +35,10 @@ export const ScreenshotMatch: FC<Props> = ({ html, classNames, templates }) => {
 
     useEffect(() => {
         async function handleCheck() {
+            if (!loaded) {
+                return;
+            }
+
             setIframeWidth(IframeSize.min);
             await delay();
 
@@ -65,9 +70,14 @@ export const ScreenshotMatch: FC<Props> = ({ html, classNames, templates }) => {
             }
             const diffsValues = await Promise.all(
                 screenshots.map(async ({ targetWidth, className, image }) => {
-                    const template = await fetchImage(
-                        templates[targetWidth][className],
-                    );
+                    const idbKey = getFileKey(workKey, className, targetWidth);
+
+                    const imageSrc = (await idb.get(
+                        CollectionKey.images,
+                        idbKey,
+                    )) as string;
+
+                    const template = await fetchImage(imageSrc);
 
                     const target: HTMLCanvasElement = image;
 
