@@ -1,7 +1,6 @@
 import * as React from 'react';
 import JSZip from 'jszip';
-import { FC, useState } from 'react';
-import { uniqId } from '../../utils/uniq-id.utils';
+import { FC } from 'react';
 
 interface Props {
     onWorkLoad: (jszip: JSZip) => void;
@@ -24,11 +23,6 @@ export const ZipParser: FC<Props> = ({ onWorkLoad }) => {
                 return sum;
             }, {} as Record<string, JSZip.JSZipObject>);
         }
-
-        // console.log(zipContent);
-        //
-        // const index = await zipContent.files["how-to-learn-main/index.html"].async('text')
-        // console.log(index);
 
         onWorkLoad(zipContent);
     };

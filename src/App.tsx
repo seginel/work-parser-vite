@@ -43,26 +43,24 @@ function App() {
                             path="/"
                             element={
                                 <>
-                                    <WorkCheck title={'1 работа'}>
-                                        <WorkChecker
-                                            workKey={WorkKey.first}
-                                            classList={FIRST_WORK_CLASS_NAMES}
-                                            fileList={FIRST_WORK_FILE_LIST}
-                                            brief={FIRST_BRIEF_CONDITIONS}
-                                            cssFileMask={'styles/style.css'}
-                                            template={FIRST_WORK_HTML_TEMPLATE}
-                                        />
-                                    </WorkCheck>
-                                    <WorkCheck title={'2 работа'}>
-                                        <WorkChecker
-                                            workKey={WorkKey.second}
-                                            classList={SECOND_WORK_CLASS_NAMES}
-                                            fileList={SECOND_WORK_FILE_LIST}
-                                            brief={SECOND_BRIEF_CONDITIONS}
-                                            cssFileMask={'blocks/'}
-                                            template={SECOND_WORK_HTML_TEMPLATE}
-                                        />
-                                    </WorkCheck>
+                                    <WorkChecker
+                                        workKey={WorkKey.first}
+                                        classList={FIRST_WORK_CLASS_NAMES}
+                                        fileList={FIRST_WORK_FILE_LIST}
+                                        brief={FIRST_BRIEF_CONDITIONS}
+                                        cssFileMask={'styles/style.css'}
+                                        template={FIRST_WORK_HTML_TEMPLATE}
+                                        title={'1 работа'}
+                                    />
+                                    <WorkChecker
+                                        workKey={WorkKey.second}
+                                        classList={SECOND_WORK_CLASS_NAMES}
+                                        fileList={SECOND_WORK_FILE_LIST}
+                                        brief={SECOND_BRIEF_CONDITIONS}
+                                        cssFileMask={'blocks/'}
+                                        template={SECOND_WORK_HTML_TEMPLATE}
+                                        title={'2 работа'}
+                                    />
                                 </>
                             }
                         />

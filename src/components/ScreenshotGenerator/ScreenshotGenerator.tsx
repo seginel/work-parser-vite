@@ -76,6 +76,7 @@ export const ScreenshotGenerator: FC<Props> = ({
         >
             <h1>{title}</h1>
             <button onClick={handleClick}>Get images</button>
+            {generationState && <div>Подождите 🕰</div>}
             {generationState && (
                 <IframeSrcDoc ref={ref} html={html} width={iframeWidth} />
             )}

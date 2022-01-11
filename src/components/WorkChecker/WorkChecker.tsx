@@ -1,4 +1,4 @@
-import { WorkKey } from '../../types/idb';
+import { CollectionKey, WorkKey } from '../../types/idb';
 import { FC, useState } from 'react';
 import JSZip from 'jszip';
 import { useUnzipContent } from '../../hooks/useUnzipContent';
@@ -14,6 +14,9 @@ import { BriefCondition } from '../../types/BriefCondtition';
 import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
 import { DEV_MIX } from '../../templates/common';
 import { ScreenshotMatch } from '../ScreenshotMatch/ScreenshotMatch';
+import { idb } from '../../hooks/useIdb';
+import { getFileKey } from '../../utils/idb.utils';
+import { IframeSize } from '../../constants/iframe.constants';
 
 interface Props {
     workKey: WorkKey;
@@ -22,6 +25,7 @@ interface Props {
     cssFileMask: string;
     template: string;
     brief: BriefCondition[];
+    title: string;
 }
 
 export const WorkChecker: FC<Props> = ({
@@ -31,6 +35,7 @@ export const WorkChecker: FC<Props> = ({
     cssFileMask,
     template,
     brief,
+    title,
 }) => {
     const [work, setWork] = useState<JSZip | null>(null);
     const { html, css } = useUnzipContent(work, cssFileMask);
@@ -42,10 +47,24 @@ export const WorkChecker: FC<Props> = ({
         trigger,
     );
 
+    const handleReset = async () => {
+        await Promise.all(
+            classList
+                .map((item) => [
+                    getFileKey(workKey, item, IframeSize.min),
+                    getFileKey(workKey, item, IframeSize.max),
+                ])
+                .flat()
+                .map((key) => idb.delete(CollectionKey.images, key)),
+        );
+
+        setTrigger(Date.now());
+    };
+
     if (!loading && !contains) {
         return (
             <ScreenshotGenerator
-                title={'Генерация картинок первой работы'}
+                title={`Генерация картинок ${title}`}
                 html={template}
                 classList={classList}
                 workKey={workKey}
@@ -54,15 +73,17 @@ export const WorkChecker: FC<Props> = ({
         );
     }
 
-    if (!work) {
-        return (
-            <>
-                <ZipParser onWorkLoad={setWork} />
-            </>
-        );
-    }
-
-    return (
+    const content = !work ? (
+        <>
+            <ZipParser onWorkLoad={setWork} />
+            <button
+                onClick={handleReset}
+                style={{ fontSize: '10px', marginTop: '10px' }}
+            >
+                ♻️ Сбросить сгенерированные картинки
+            </button>
+        </>
+    ) : (
         <>
             <BriefChecker html={html} css={css} conditions={brief} />
             <HtmlValidation html={html} />
@@ -75,5 +96,22 @@ export const WorkChecker: FC<Props> = ({
                 workKey={workKey}
             />
         </>
+    );
+
+    return (
+        <section>
+            <h1>
+                {title}{' '}
+                {work && (
+                    <span
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => setWork(null)}
+                    >
+                        🪣
+                    </span>
+                )}
+            </h1>
+            {content}
+        </section>
     );
 };
