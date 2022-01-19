@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ValidVisibilityContext } from './context/ValidVisibilityContext';
 import { ValidVisibility } from './components/ValidVisibility/ValidVisibility';
-import { WorkCheck } from './components/WorkCheck/WorkCheck';
 import { initIdb } from './hooks/useIdb';
 import { WorkKey } from './types/idb';
 import { WorkChecker } from './components/WorkChecker/WorkChecker';
