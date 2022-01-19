@@ -13,5 +13,4 @@ export const FIRST_WORK_FILE_LIST = [
     'styles/',
     'styles/normalize.css',
     'styles/style.css',
-    'texts.md',
 ];

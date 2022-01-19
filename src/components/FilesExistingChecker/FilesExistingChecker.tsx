@@ -9,7 +9,9 @@ interface Props {
 }
 
 export const FilesExistingChecker: FC<Props> = ({ zip, fileList }) => {
-    const allFilesExist = fileList.every((fileName) => zip.files[fileName]);
+    const allFilesExist = fileList.every((fileName) =>
+        fileName.split('|').some((name) => zip.files[name]),
+    );
 
     return (
         <Collapse title={'Файлы'} valid={allFilesExist}>

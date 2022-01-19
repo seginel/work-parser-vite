@@ -73,7 +73,7 @@ export const SECOND_WORK_CSS_FILES = [
 
 export const SECOND_WORK_FILE_LIST = [
     '.editorconfig',
-    'README.MD',
+    'README.MD|README.md',
     ...SECOND_WORK_CSS_FILES,
     'images/cards-attention.png',
     'images/cards-competence.png',
@@ -95,6 +95,5 @@ export const SECOND_WORK_FILE_LIST = [
     'images/vk_color_white.svg',
     'index.html',
     'pages/index.css',
-    'texts.md',
     'vendor/normalize.css',
 ];
