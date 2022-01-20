@@ -36,7 +36,7 @@ export const SectionChecker: FC<Props> = ({ html, sectionList }) => {
         >
             {sectionList.map((key, index) => (
                 <div key={key}>
-                    {getValidityEmoji(nodes?.[index].className.includes(key))}{' '}
+                    {getValidityEmoji(nodes?.[index]?.className?.includes(key))}{' '}
                     {key}
                 </div>
             ))}

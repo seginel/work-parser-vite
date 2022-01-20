@@ -48,7 +48,7 @@ function App() {
                                         fileList={FIRST_WORK_FILE_LIST}
                                         brief={FIRST_BRIEF_CONDITIONS}
                                         cssFileMask={'styles/style.css'}
-                                        template={FIRST_WORK_HTML_TEMPLATE}
+                                        templateFileName={'template1'}
                                         title={'1 работа'}
                                     />
                                     <WorkChecker
@@ -57,7 +57,7 @@ function App() {
                                         fileList={SECOND_WORK_FILE_LIST}
                                         brief={SECOND_BRIEF_CONDITIONS}
                                         cssFileMask={'blocks/'}
-                                        template={SECOND_WORK_HTML_TEMPLATE}
+                                        templateFileName={'template2'}
                                         title={'2 работа'}
                                     />
                                 </>

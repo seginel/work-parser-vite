@@ -15,3 +15,18 @@ export const DEV_MIX = `
 }
 
 `;
+
+export const DEV_MIX_WITHOUT_ANIMATION = `
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.video__iframe {
+  background-color: black;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+`;
