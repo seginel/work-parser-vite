@@ -1,6 +1,7 @@
 import * as React from 'react';
 import JSZip from 'jszip';
 import { FC } from 'react';
+import { getZipWithoutFolderPrefix } from '../../utils/zip.utils';
 
 interface Props {
     onWorkLoad: (jszip: JSZip) => void;
@@ -8,21 +9,9 @@ interface Props {
 
 export const ZipParser: FC<Props> = ({ onWorkLoad }) => {
     const onChangeFile = async (event: any) => {
-        const zipContent = await JSZip.loadAsync(event.target.files[0], {
-            createFolders: true,
-        });
-
-        const fileList = Object.keys(zipContent.files);
-
-        if (zipContent.files[fileList[0]].dir) {
-            const rootDirectoryName = zipContent.files[fileList[0]].name;
-
-            zipContent.files = fileList.slice(1).reduce((sum, key) => {
-                sum[key.replace(rootDirectoryName, '')] = zipContent.files[key];
-
-                return sum;
-            }, {} as Record<string, JSZip.JSZipObject>);
-        }
+        const zipContent = await getZipWithoutFolderPrefix(
+            event.target.files[0],
+        );
 
         onWorkLoad(zipContent);
     };

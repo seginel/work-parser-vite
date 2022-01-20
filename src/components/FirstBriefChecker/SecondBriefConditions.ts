@@ -105,7 +105,6 @@ const OAKLEY_CONDITIONS: BriefCondition[] = [
         selector:
             '.oakley .two-columns .two-columns__main-text .two-columns__paragraph',
         css: {
-            marginBottom: '30px',
             ...TWO_COLUMNS_PARAGRAPH_CSS,
         },
     },
@@ -163,7 +162,6 @@ const KHAN_CONDITIONS: BriefCondition[] = [
         css: {
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'flex-start',
         },
     },
     {

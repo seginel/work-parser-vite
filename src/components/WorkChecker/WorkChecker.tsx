@@ -23,9 +23,9 @@ interface Props {
     classList: string[];
     fileList: string[];
     cssFileMask: string;
-    template: string;
     brief: BriefCondition[];
     title: string;
+    templateFileName: string;
 }
 
 export const WorkChecker: FC<Props> = ({
@@ -33,7 +33,7 @@ export const WorkChecker: FC<Props> = ({
     classList,
     fileList,
     cssFileMask,
-    template,
+    templateFileName,
     brief,
     title,
 }) => {
@@ -65,10 +65,11 @@ export const WorkChecker: FC<Props> = ({
         return (
             <ScreenshotGenerator
                 title={`Генерация картинок ${title}`}
-                html={template}
                 classList={classList}
                 workKey={workKey}
                 onComplete={() => setTrigger(Date.now())}
+                cssFileMask={cssFileMask}
+                templateFileName={templateFileName}
             />
         );
     }
