@@ -8,7 +8,7 @@ import { getKeys } from '../../utils/get-keys.utils';
 import { delay } from '../../utils/delay.utils';
 import { getRgbFromHex } from '../../utils/hex-to-rgb.utils';
 import { uniqId } from '../../utils/uniq-id.utils';
-import { DEV_MIX } from '../../templates/common';
+import { DEV_MIX_WITHOUT_ANIMATION } from '../../templates/common';
 
 interface Props {
     html?: string;
@@ -234,7 +234,11 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
             {!done && (
                 <IframeSrcDoc
                     width={IframeSize.max}
-                    html={getBodyFromHtmlWithStyle(html, css, DEV_MIX)}
+                    html={getBodyFromHtmlWithStyle(
+                        html,
+                        css,
+                        DEV_MIX_WITHOUT_ANIMATION,
+                    )}
                     ref={ref}
                 />
             )}
