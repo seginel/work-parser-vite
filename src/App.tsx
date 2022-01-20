@@ -9,11 +9,9 @@ import { WorkChecker } from './components/WorkChecker/WorkChecker';
 import { FIRST_WORK_CLASS_NAMES } from './templates/how-to-learn/classNames';
 import { FIRST_WORK_FILE_LIST } from './templates/how-to-learn/fileList';
 import { FIRST_BRIEF_CONDITIONS } from './components/FirstBriefChecker/FirstBriefConditions';
-import { FIRST_WORK_HTML_TEMPLATE } from './templates/how-to-learn/template';
 import { SECOND_WORK_CLASS_NAMES } from './templates/how-to-learn-2/classNames';
 import { SECOND_WORK_FILE_LIST } from './templates/how-to-learn-2/fileList';
 import { SECOND_BRIEF_CONDITIONS } from './components/FirstBriefChecker/SecondBriefConditions';
-import { SECOND_WORK_HTML_TEMPLATE } from './templates/how-to-learn-2/template';
 
 function App() {
     const [ready, setReady] = useState(false);
