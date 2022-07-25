@@ -146,6 +146,7 @@ export const ScreenshotMatch: FC<Props> = ({ html, classNames, workKey }) => {
                     html={html}
                     onLoad={() => setLoaded(true)}
                     width={iframeWidth}
+                    idValue="myiframe"
                 />
             )}
             <Collapse

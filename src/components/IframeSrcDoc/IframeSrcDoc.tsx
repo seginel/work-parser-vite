@@ -5,11 +5,12 @@ interface Props {
     html: string;
     onLoad?: () => void;
     width: IframeSize;
+    idValue?: string;
 }
 
 export const IframeSrcDoc = React.memo(
     React.forwardRef<HTMLIFrameElement, Props>(
-        ({ html, onLoad, width }, ref) => {
+        ({ html, onLoad, width, idValue }, ref) => {
             return (
                 <iframe
                     ref={ref}
@@ -18,7 +19,7 @@ export const IframeSrcDoc = React.memo(
                         minHeight: '100vh',
                         border: 'none',
                     }}
-                    id="myiframe"
+                    id={idValue}
                     srcDoc={html}
                     onLoad={onLoad}
                 />

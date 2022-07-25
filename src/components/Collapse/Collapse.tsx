@@ -27,6 +27,7 @@ export const Collapse: FC<Props> = ({
             style={{
                 opacity: !valid ? 1 : 0.5,
                 display: !visibility && valid ? 'none' : 'block',
+                borderBottom: '1px solid gray',
             }}
         >
             <Tag

@@ -45,7 +45,7 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                 if (!element) {
                     return {
                         ...condition,
-                        errors: [<div key={uniqId()}>Элемент не найден</div>],
+                        errors: [<div className="errorText" key={uniqId()}>Элемент не найден. Возможно ошибка в именовании классов</div>],
                     };
                 }
 
@@ -201,7 +201,7 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
 
     return (
         <>
-            <Collapse title={'Бриф'} valid={!invalid.length}>
+            <Collapse title={'Проверка по брифу'} valid={!invalid.length}>
                 {state.map(({ errors, selector, css: rules }, index) => (
                     <Collapse
                         title={selector}
@@ -233,6 +233,7 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
             </Collapse>
             {!done && (
                 <IframeSrcDoc
+                    idValue="myiframe"
                     width={IframeSize.max}
                     html={getBodyFromHtmlWithStyle(
                         html,
@@ -242,6 +243,29 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                     ref={ref}
                 />
             )}
+
+            <Collapse title={'Проект в ифрейме (размер 1100)'} initialCollapsed={true}>
+                <IframeSrcDoc
+                    idValue={"narrowIframe"}
+                    width={IframeSize.min}
+                    html={getBodyFromHtmlWithStyle(
+                        html,
+                        css,
+                        DEV_MIX_WITHOUT_ANIMATION,
+                    )}
+                />
+            </Collapse>
+            <Collapse title={'Проект в ифрейме (размер 1600)'} initialCollapsed={true}>
+                <IframeSrcDoc
+                    idValue={"wideIframe"}
+                    width={IframeSize.max}
+                    html={getBodyFromHtmlWithStyle(
+                        html,
+                        css,
+                        DEV_MIX_WITHOUT_ANIMATION,
+                    )}
+                />
+           </Collapse>
         </>
     );
 };

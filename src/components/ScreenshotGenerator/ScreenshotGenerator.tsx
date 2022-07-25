@@ -99,6 +99,7 @@ export const ScreenshotGenerator: FC<Props> = ({
                     ref={ref}
                     html={getBodyFromHtmlWithStyle(html, css, DEV_MIX)}
                     width={iframeWidth}
+                    idValue="myiframe"
                 />
             )}
         </div>

@@ -76,6 +76,7 @@ export const WorkChecker: FC<Props> = ({
 
     const content = !work ? (
         <>
+            <div className="steps">Для начала проверки необходимо загрузить zip-файл с проектом</div>
             <ZipParser onWorkLoad={setWork} />
             <button
                 onClick={handleReset}
@@ -104,12 +105,12 @@ export const WorkChecker: FC<Props> = ({
             <h1>
                 {title}{' '}
                 {work && (
-                    <span
+                    <button
                         style={{ cursor: 'pointer' }}
                         onClick={() => setWork(null)}
                     >
-                        🪣
-                    </span>
+                        Сбросить
+                    </button>
                 )}
             </h1>
             {content}
