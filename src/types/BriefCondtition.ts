@@ -24,4 +24,5 @@ export interface BriefCondition {
     css?: Partial<Record<CSSKeysWithoutIndex, string>>;
     comment?: string;
     count?: number;
+    checkTag?: boolean;
 }

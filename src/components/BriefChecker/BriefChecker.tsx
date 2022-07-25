@@ -36,16 +36,26 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
             }
 
             const result = conditions.map((condition) => {
-                const { selector, css: rules = {}, count } = condition;
+                const { selector, css: rules = {}, count, checkTag } = condition;
 
                 const contentWindow = ref.current?.contentWindow!;
 
                 const element = contentWindow.document.querySelector(selector);
 
-                if (!element) {
+                const elementTag = (element && element.tagName) || null;
+
+                if (checkTag && !elementTag) {
                     return {
                         ...condition,
-                        errors: [<div key={uniqId()}>Элемент не найден</div>],
+                        errors: [<div className="errorText" key={uniqId()}>Элемент в DOM не найден. Проверьте имя тега</div>],
+                    };
+                }
+
+
+                if (!element && !checkTag) {
+                    return {
+                        ...condition,
+                        errors: [<div className="errorText" key={uniqId()}>Элемент не найден. Возможно ошибка в именовании классов</div>],
                     };
                 }
 
@@ -65,6 +75,7 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                     }
                 }
 
+                // @ts-ignore
                 const styles = contentWindow.getComputedStyle(element);
 
                 getKeys(rules).forEach((key, index) => {
@@ -162,11 +173,22 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                             return;
 
                         default:
-                            if (target !== template) {
+
+                            let targetInit;
+
+                            // @ts-ignore
+                            if (parseInt(target) == 0) {
+                                targetInit = '0';
+                            } else {
+                                targetInit = target;
+                            }
+
+                            if (targetInit !== template) {
+
                                 errors.push(
                                     <div key={uniqId()}>
                                         Значение свойства <b>{key}</b> равное{' '}
-                                        <u>{target}</u> не соответствует
+                                        <u>{targetInit}</u> не соответствует
                                         ожидаемому <u>{template}</u>
                                     </div>,
                                 );
@@ -201,7 +223,7 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
 
     return (
         <>
-            <Collapse title={'Бриф'} valid={!invalid.length}>
+            <Collapse title={'Проверка по брифу'} valid={!invalid.length}>
                 {state.map(({ errors, selector, css: rules }, index) => (
                     <Collapse
                         title={selector}
@@ -233,6 +255,7 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
             </Collapse>
             {!done && (
                 <IframeSrcDoc
+                    idValue="myiframe"
                     width={IframeSize.max}
                     html={getBodyFromHtmlWithStyle(
                         html,
@@ -242,6 +265,29 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                     ref={ref}
                 />
             )}
+
+            <Collapse title={'Проект в ифрейме (размер 1100)'} initialCollapsed={true}>
+                <IframeSrcDoc
+                    idValue={"narrowIframe"}
+                    width={IframeSize.min}
+                    html={getBodyFromHtmlWithStyle(
+                        html,
+                        css,
+                        DEV_MIX_WITHOUT_ANIMATION,
+                    )}
+                />
+            </Collapse>
+            <Collapse title={'Проект в ифрейме (размер 1600)'} initialCollapsed={true}>
+                <IframeSrcDoc
+                    idValue={"wideIframe"}
+                    width={IframeSize.max}
+                    html={getBodyFromHtmlWithStyle(
+                        html,
+                        css,
+                        DEV_MIX_WITHOUT_ANIMATION,
+                    )}
+                />
+           </Collapse>
         </>
     );
 };

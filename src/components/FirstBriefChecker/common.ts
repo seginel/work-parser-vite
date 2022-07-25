@@ -11,7 +11,7 @@ export const SECTION_TITLE_CSS = {
     textAlign: 'center',
     lineHeight: '1.15',
     fontSize: '60px',
-    fontWeight: '700',
+    fontWeight: '600',
 };
 
 export const SECTION_SUBTITLE_CSS = {
@@ -30,11 +30,13 @@ export const TWO_COLUMNS_CSS = {
 };
 
 export const TWO_COLUMNS_BRIEF_CSS = {
-    width: '175px',
+    maxWidth: '175px',
     lineHeight: '1.2',
     fontSize: '18px',
     fontWeight: '400',
     color: Colors.blue,
+    marginTop: '0',
+    marginBottom: '0',
 };
 
 export const TWO_COLUMNS_MAIN_TEXT_CSS = {

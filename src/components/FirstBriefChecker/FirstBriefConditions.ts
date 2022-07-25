@@ -19,6 +19,14 @@ export const HEADER_CONDITIONS: BriefCondition[] = [
         css: {
             minHeight: '600px',
             maxHeight: '756px',
+            overflow: 'hidden'
+        },
+    },
+    {
+        selector: '.header .logo',
+        css: {
+            width: '228px',
+            height: '32px',
         },
     },
     {
@@ -27,7 +35,7 @@ export const HEADER_CONDITIONS: BriefCondition[] = [
             position: 'absolute',
             left: '64px',
             top: '30px',
-            width: '183px',
+            width: '228px',
             height: '32px',
         },
     },
@@ -38,7 +46,9 @@ export const HEADER_CONDITIONS: BriefCondition[] = [
             maxWidth: '730px',
             lineHeight: '96px',
             fontSize: '102px',
-            fontWeight: '700',
+            fontWeight: '600',
+            marginTop: '0',
+            marginBottom: '0',
         },
     },
     {
@@ -47,14 +57,20 @@ export const HEADER_CONDITIONS: BriefCondition[] = [
             position: 'absolute',
             bottom: '30px',
             left: '64px',
-            width: '388px',
+            maxWidth: '388px',
             lineHeight: '25px',
             fontSize: '18px',
             fontWeight: '400',
+            marginTop: '0',
+            marginBottom: '0',
         },
     },
     {
         selector: '.header .header__subtitle a.header__link',
+        css: {
+            color: Colors.blue,
+            textDecorationLine: 'none',
+        }
     },
     {
         selector: '.header .header__main-illustration',
@@ -64,6 +80,7 @@ export const HEADER_CONDITIONS: BriefCondition[] = [
             bottom: '0',
             width: '765px',
             height: '608px',
+            objectFit: 'cover',
         },
     },
     {
@@ -74,6 +91,21 @@ export const HEADER_CONDITIONS: BriefCondition[] = [
             top: '64px',
             position: 'absolute',
             right: '0',
+            backgroundColor: Colors.blue,
+        },
+    },
+    {
+        selector: '.header p.header__subtitle',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
+        selector: '.header div.header__square-pic',
+        checkTag: true,
+        css: {
+
         },
     },
 ];
@@ -87,6 +119,13 @@ export const DESCRIPTION_CONDITIONS: BriefCondition[] = [
         selector:
             '.description .two-columns .two-columns__brief' /* todo add heading */,
         css: TWO_COLUMNS_BRIEF_CSS,
+    },
+    {
+        selector: '.description .two-columns h2.two-columns__brief',
+        checkTag: true,
+        css: {
+
+        },
     },
     {
         selector: '.description .two-columns .two-columns__main-text',
@@ -103,11 +142,26 @@ export const DESCRIPTION_CONDITIONS: BriefCondition[] = [
     },
     {
         selector:
+            '.description .two-columns .two-columns__main-text .two-columns__paragraph:last-child',
+        css: {
+            marginBottom: '0',
+        },
+    },
+    {
+        selector:
             '.description .two-columns .two-columns__main-text .two-columns__paragraph:nth-of-type(2) .two-columns__span-accent',
         css: {
             lineHeight: '34px',
             fontSize: '24px',
-            fontWeight: '700',
+            fontWeight: '600',
+        },
+    },
+    {
+        selector:
+            '.description .two-columns .two-columns__main-text .two-columns__paragraph:nth-of-type(2) span.two-columns__span-accent',
+        checkTag: true,
+        css: {
+
         },
     },
 ];
@@ -125,8 +179,22 @@ export const DIGITS_CONDITIONS: BriefCondition[] = [
         css: SECTION_TITLE_CSS,
     },
     {
+        selector: '.digits h2.section-title',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
         selector: '.digits .section-subtitle',
         css: SECTION_SUBTITLE_CSS,
+    },
+    {
+        selector: '.digits p.section-subtitle',
+        checkTag: true,
+        css: {
+
+        },
     },
     {
         selector: '.digits  .table',
@@ -148,7 +216,7 @@ export const DIGITS_CONDITIONS: BriefCondition[] = [
         css: {
             lineHeight: '1.15',
             fontSize: '24px',
-            fontWeight: '700',
+            fontWeight: '600',
         },
     },
     {
@@ -160,6 +228,13 @@ export const DIGITS_CONDITIONS: BriefCondition[] = [
             fontSize: '18px',
         },
     },
+    {
+        selector: '.digits  .table .table__cell p.table__text',
+        checkTag: true,
+        css: {
+
+        },
+    },
 ];
 
 export const FEYNMAN_CONDITIONS: BriefCondition[] = [
@@ -167,15 +242,25 @@ export const FEYNMAN_CONDITIONS: BriefCondition[] = [
         selector: '.feynman',
         css: {
             minHeight: '890px',
+            backgroundColor: Colors.lightGray,
         },
     }, // todo add background position check
     {
         selector: '.feynman .feynman__title',
         css: {
-            width: '648px',
+            maxWidth: '648px',
             lineHeight: '1.15',
             fontSize: '120px',
-            fontWeight: '700',
+            fontWeight: '600',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+    {
+        selector: '.feynman h2.feynman__title',
+        checkTag: true,
+        css: {
+
         },
     },
     {
@@ -184,6 +269,16 @@ export const FEYNMAN_CONDITIONS: BriefCondition[] = [
             lineHeight: '51px',
             fontSize: '36px',
             fontWeight: '400',
+            textAlign: 'center',
+            marginTop: '70px',
+            marginBottom: '0',
+        },
+    },
+    {
+        selector: '.feynman p.feynman__subtitle',
+        checkTag: true,
+        css: {
+
         },
     },
     {
@@ -196,6 +291,7 @@ export const FEYNMAN_CONDITIONS: BriefCondition[] = [
             fontSize: '36px',
             fontWeight: '400',
             color: Colors.blue,
+            textDecorationLine: 'none',
         },
     },
 ];
@@ -205,6 +301,7 @@ export const KAUFMAN_CONDITIONS: BriefCondition[] = [
         selector: '.kaufman',
         css: {
             overflow: 'hidden',
+            backgroundColor: Colors.darkGray,
         },
     },
     {
@@ -215,10 +312,24 @@ export const KAUFMAN_CONDITIONS: BriefCondition[] = [
         },
     },
     {
+        selector: '.kaufman h2.section-title.section-title_theme_dark',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
         selector: '.kaufman .section-subtitle.section-subtitle_theme_dark',
         css: {
             ...SECTION_SUBTITLE_CSS,
             color: Colors.white,
+        },
+    },
+    {
+        selector: '.kaufman p.section-subtitle.section-subtitle_theme_dark',
+        checkTag: true,
+        css: {
+
         },
     },
     {
@@ -243,7 +354,7 @@ export const KAUFMAN_CONDITIONS: BriefCondition[] = [
         css: {
             lineHeight: '1.15',
             fontSize: '24px',
-            fontWeight: '700',
+            fontWeight: '600',
         },
     },
     {
@@ -258,12 +369,28 @@ export const KAUFMAN_CONDITIONS: BriefCondition[] = [
         },
     },
     {
+        selector:
+            '.kaufman .table.table_theme_dark .table__cell.table__cell_theme_dark p.table__text.table__text_theme_dark',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
         selector: '.kaufman .kaufman__triangle',
         css: {
             width: '877px',
             height: '877px',
             position: 'absolute',
             right: '-210px',
+            top: '0',
+        },
+    },
+    {
+        selector: '.kaufman div.kaufman__triangle',
+        checkTag: true,
+        css: {
+
         },
     },
 ];
@@ -274,7 +401,7 @@ export const FOOTER_CONDITIONS: BriefCondition[] = [
         css: {
             backgroundColor: Colors.darkGray,
             minHeight: '350px',
-
+            display: 'flex',
             paddingTop: '60px',
             paddingBottom: '40px',
         },
@@ -311,6 +438,15 @@ export const FOOTER_CONDITIONS: BriefCondition[] = [
             lineHeight: '25px',
             fontSize: '18px',
             fontWeight: '400',
+            position: 'static',
+        },
+    },
+
+    {
+        selector: '.footer p.footer__author',
+        checkTag: true,
+        css: {
+
         },
     },
     {
@@ -319,7 +455,7 @@ export const FOOTER_CONDITIONS: BriefCondition[] = [
         css: {
             lineHeight: '30px',
             fontSize: '18px',
-            fontWeight: '700',
+            fontWeight: '600',
         },
     },
     {
@@ -328,7 +464,7 @@ export const FOOTER_CONDITIONS: BriefCondition[] = [
         css: {
             lineHeight: '30px',
             fontSize: '18px',
-            fontWeight: '700',
+            fontWeight: '600',
         },
     },
     {
@@ -372,13 +508,14 @@ export const FOOTER_CONDITIONS: BriefCondition[] = [
         css: {
             width: '16px',
             height: '16px',
+            marginRight: '10px',
         },
     },
     {
         selector: '.footer .logo.logo_place_footer',
         css: {
-            width: '183px',
-            height: '35px',
+            width: '228px',
+            height: '32px',
         },
     },
 ];
