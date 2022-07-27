@@ -94,6 +94,20 @@ export const HEADER_CONDITIONS: BriefCondition[] = [
             backgroundColor: Colors.blue,
         },
     },
+    {
+        selector: '.header p.header__subtitle',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
+        selector: '.header div.header__square-pic',
+        checkTag: true,
+        css: {
+
+        },
+    },
 ];
 
 export const DESCRIPTION_CONDITIONS: BriefCondition[] = [
@@ -105,6 +119,13 @@ export const DESCRIPTION_CONDITIONS: BriefCondition[] = [
         selector:
             '.description .two-columns .two-columns__brief' /* todo add heading */,
         css: TWO_COLUMNS_BRIEF_CSS,
+    },
+    {
+        selector: '.description .two-columns h2.two-columns__brief',
+        checkTag: true,
+        css: {
+
+        },
     },
     {
         selector: '.description .two-columns .two-columns__main-text',
@@ -135,6 +156,14 @@ export const DESCRIPTION_CONDITIONS: BriefCondition[] = [
             fontWeight: '600',
         },
     },
+    {
+        selector:
+            '.description .two-columns .two-columns__main-text .two-columns__paragraph:nth-of-type(2) span.two-columns__span-accent',
+        checkTag: true,
+        css: {
+
+        },
+    },
 ];
 
 export const DIGITS_CONDITIONS: BriefCondition[] = [
@@ -150,8 +179,22 @@ export const DIGITS_CONDITIONS: BriefCondition[] = [
         css: SECTION_TITLE_CSS,
     },
     {
+        selector: '.digits h2.section-title',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
         selector: '.digits .section-subtitle',
         css: SECTION_SUBTITLE_CSS,
+    },
+    {
+        selector: '.digits p.section-subtitle',
+        checkTag: true,
+        css: {
+
+        },
     },
     {
         selector: '.digits  .table',
@@ -185,6 +228,13 @@ export const DIGITS_CONDITIONS: BriefCondition[] = [
             fontSize: '18px',
         },
     },
+    {
+        selector: '.digits  .table .table__cell p.table__text',
+        checkTag: true,
+        css: {
+
+        },
+    },
 ];
 
 export const FEYNMAN_CONDITIONS: BriefCondition[] = [
@@ -207,6 +257,13 @@ export const FEYNMAN_CONDITIONS: BriefCondition[] = [
         },
     },
     {
+        selector: '.feynman h2.feynman__title',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
         selector: '.feynman .feynman__subtitle',
         css: {
             lineHeight: '51px',
@@ -215,6 +272,13 @@ export const FEYNMAN_CONDITIONS: BriefCondition[] = [
             textAlign: 'center',
             marginTop: '70px',
             marginBottom: '0',
+        },
+    },
+    {
+        selector: '.feynman p.feynman__subtitle',
+        checkTag: true,
+        css: {
+
         },
     },
     {
@@ -248,10 +312,24 @@ export const KAUFMAN_CONDITIONS: BriefCondition[] = [
         },
     },
     {
+        selector: '.kaufman h2.section-title.section-title_theme_dark',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
         selector: '.kaufman .section-subtitle.section-subtitle_theme_dark',
         css: {
             ...SECTION_SUBTITLE_CSS,
             color: Colors.white,
+        },
+    },
+    {
+        selector: '.kaufman p.section-subtitle.section-subtitle_theme_dark',
+        checkTag: true,
+        css: {
+
         },
     },
     {
@@ -291,6 +369,14 @@ export const KAUFMAN_CONDITIONS: BriefCondition[] = [
         },
     },
     {
+        selector:
+            '.kaufman .table.table_theme_dark .table__cell.table__cell_theme_dark p.table__text.table__text_theme_dark',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
         selector: '.kaufman .kaufman__triangle',
         css: {
             width: '877px',
@@ -298,6 +384,13 @@ export const KAUFMAN_CONDITIONS: BriefCondition[] = [
             position: 'absolute',
             right: '-210px',
             top: '0',
+        },
+    },
+    {
+        selector: '.kaufman div.kaufman__triangle',
+        checkTag: true,
+        css: {
+
         },
     },
 ];
@@ -346,6 +439,14 @@ export const FOOTER_CONDITIONS: BriefCondition[] = [
             fontSize: '18px',
             fontWeight: '400',
             position: 'static',
+        },
+    },
+
+    {
+        selector: '.footer p.footer__author',
+        checkTag: true,
+        css: {
+
         },
     },
     {

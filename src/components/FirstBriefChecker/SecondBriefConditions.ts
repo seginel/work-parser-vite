@@ -40,6 +40,13 @@ const TECHNIQUES_CONDITIONS: BriefCondition[] = [
         },
     },
     {
+        selector: '.techniques h2.section-title',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
         selector: '.techniques .cards .cards__item',
         count: 5,
         css: {
@@ -58,7 +65,7 @@ const TECHNIQUES_CONDITIONS: BriefCondition[] = [
     {
         selector: '.techniques .cards .cards__item .cards__title',
         css: {
-            fontWeight: '700',
+            fontWeight: '600',
             fontSize: '24px',
             lineHeight: '1.15',
         },
@@ -80,6 +87,13 @@ const VIDEO_CONDITIONS: BriefCondition[] = [
         },
     },
     {
+        selector: '.video h2.section-title',
+        checkTag: true,
+        css: {
+
+        },
+    },
+    {
         selector: '.video .video__iframes .video__iframe',
         count: 2,
         css: {
@@ -96,6 +110,14 @@ const OAKLEY_CONDITIONS: BriefCondition[] = [
         selector:
             '.oakley .two-columns .two-columns__brief' /* todo add heading */,
         css: TWO_COLUMNS_BRIEF_CSS,
+    },
+    {
+        selector:
+            '.oakley .two-columns h2.two-columns__brief' /* todo add heading */,
+        css: {
+
+        },
+        checkTag: true,
     },
     {
         selector: '.oakley .two-columns .two-columns__main-text',
@@ -129,7 +151,7 @@ const KHAN_CONDITIONS: BriefCondition[] = [
         css: {
             lineHeight: '1.15',
             fontSize: '60px',
-            fontWeight: '700',
+            fontWeight: '600',
         },
     },
     {
@@ -142,12 +164,26 @@ const KHAN_CONDITIONS: BriefCondition[] = [
         },
     },
     {
+        selector: '.khan blockquote.khan__quote',
+        css: {
+
+        },
+        checkTag: true,
+    },
+    {
         selector: '.khan .khan__quote-author',
         css: {
             lineHeight: '1.15',
             fontSize: '24px',
-            fontWeight: '700',
+            fontWeight: '600',
         },
+    },
+    {
+        selector: '.khan p.khan__author',
+        css: {
+
+        },
+        checkTag: true,
     },
     {
         selector: '.khan .khan__quote-author-subline',
@@ -156,6 +192,13 @@ const KHAN_CONDITIONS: BriefCondition[] = [
             fontSize: '24px',
             fontWeight: '400',
         },
+    },
+    {
+    selector: '.khan p.khan__quote-author-subline',
+        css: {
+
+        },
+        checkTag: true,
     },
     {
         selector: '.khan .khan__book-container',
@@ -207,6 +250,12 @@ const RESOURCES_CONDITIONS: BriefCondition[] = [
             width: '270px',
             height: '38px',
         },
+    },
+    {
+        selector: '.resources a.resources__link',
+        css: {
+        },
+        checkTag: true,
     },
 ];
 

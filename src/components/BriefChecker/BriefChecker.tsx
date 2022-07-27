@@ -36,13 +36,23 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
             }
 
             const result = conditions.map((condition) => {
-                const { selector, css: rules = {}, count } = condition;
+                const { selector, css: rules = {}, count, checkTag } = condition;
 
                 const contentWindow = ref.current?.contentWindow!;
 
                 const element = contentWindow.document.querySelector(selector);
 
-                if (!element) {
+                const elementTag = element ? element.tagName : undefined;
+
+                if (checkTag && !elementTag) {
+                    return {
+                        ...condition,
+                        errors: [<div className="errorText" key={uniqId()}>Элемент в DOM не найден. Проверьте имя тега</div>],
+                    };
+                }
+
+
+                if (!element && !checkTag) {
                     return {
                         ...condition,
                         errors: [<div className="errorText" key={uniqId()}>Элемент не найден. Возможно ошибка в именовании классов</div>],
@@ -162,11 +172,21 @@ export const BriefChecker: FC<Props> = ({ html, css, conditions }) => {
                             return;
 
                         default:
-                            if (target !== template) {
+
+                            let targetInit;
+
+                            if (parseInt(target) == 0) {
+                                targetInit = '0';
+                            } else {
+                                targetInit = target;
+                            }
+
+                            if (targetInit !== template) {
+
                                 errors.push(
                                     <div key={uniqId()}>
                                         Значение свойства <b>{key}</b> равное{' '}
-                                        <u>{target}</u> не соответствует
+                                        <u>{targetInit}</u> не соответствует
                                         ожидаемому <u>{template}</u>
                                     </div>,
                                 );
