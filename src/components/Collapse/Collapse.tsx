@@ -1,12 +1,13 @@
 import { FC, useContext, useState } from 'react';
 import { getValidityEmoji } from '../../utils/emoji.utils';
-import { ValidVisibilityContext } from '../../context/ValidVisibilityContext';
+// import { ValidVisibilityContext } from '../../context/ValidVisibilityContext';
 
 interface Props {
     title: string;
     valid?: boolean;
     size?: 1 | 2 | 3 | 4 | 5 | 6;
     initialCollapsed?: boolean;
+    showArrow?: boolean;
 }
 
 export const Collapse: FC<Props> = ({
@@ -15,8 +16,9 @@ export const Collapse: FC<Props> = ({
     valid,
     size = 2,
     initialCollapsed = true,
+    showArrow= false,
 }) => {
-    const { visibility } = useContext(ValidVisibilityContext);
+    // const { visibility } = {true};
     const Tag = `h${size}` as keyof JSX.IntrinsicElements;
     const [collapsed, setCollapsed] = useState(initialCollapsed);
 
@@ -26,7 +28,6 @@ export const Collapse: FC<Props> = ({
         <section
             style={{
                 opacity: !valid ? 1 : 0.5,
-                display: !visibility && valid ? 'none' : 'block',
                 borderBottom: '1px solid gray',
             }}
         >
@@ -36,7 +37,7 @@ export const Collapse: FC<Props> = ({
                 }}
                 style={{ cursor: children ? 'pointer' : 'default' }}
             >
-                {title} {validity}
+                {title} {!showArrow && validity} {showArrow && "↓"}
             </Tag>
             {!collapsed && <div>{children}</div>}
         </section>

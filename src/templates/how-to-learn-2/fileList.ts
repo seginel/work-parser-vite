@@ -93,5 +93,6 @@ export const SECOND_WORK_FILE_LIST = [
     'images/vk_color_white.svg',
     'index.html',
     'pages/index.css',
+    'vendor/',
     'vendor/normalize.css',
 ];

@@ -16,3 +16,58 @@ code {
   color: #f00;
   font-weight: 600;
 }
+
+.checkGroup {
+  background-color: #ddd;
+  padding: 10px;
+}
+
+.checkGroup__resultWrapper {
+  display: flex;
+}
+
+.checkGroup__resulTitle {
+  margin: 0 10px 0 0;
+}
+
+.checkGroup__result_valid {
+  color: #008f00;
+}
+
+.checkGroup__result_error {
+  color: #8f0000;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table.error td {
+  background-color: #ffd3d3;
+}
+
+table.recommend td {
+  background-color: #d3d3ff;
+}
+
+table.good td {
+  background-color: #d3ffd3;
+}
+table tr {
+  display: flex;
+}
+table td {
+  border: 1px solid gray;
+}
+table tr > *:nth-child(1) {
+  width: 20%;
+  flex: 0 0 20%;
+}
+table tr > *:nth-child(2) {
+  width: 20%;
+  flex: 0 0 20%;
+}
+table tr > *:nth-child(3) {
+  width: 60%;
+  flex: 0 0 60%;
+}

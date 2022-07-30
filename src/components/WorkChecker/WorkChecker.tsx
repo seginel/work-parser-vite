@@ -5,15 +5,15 @@ import { useUnzipContent } from '../../hooks/useUnzipContent';
 import { useDbContainsImages } from '../../hooks/useDbContainsImages';
 import { ScreenshotGenerator } from '../ScreenshotGenerator/ScreenshotGenerator';
 import { ZipParser } from '../ZipParser/ZipParser';
-import { BriefChecker } from '../BriefChecker/BriefChecker';
-import { HtmlValidation } from '../HtmlValidation/HtmlValiidation';
-import { BemValidation } from '../BemValidation/BemValidation';
+// import { BriefChecker } from '../BriefChecker/BriefChecker';
+// import { HtmlValidation } from '../HtmlValidation/HtmlValiidation';
+// import { BemValidation } from '../BemValidation/BemValidation';
 import { FilesExistingChecker } from '../FilesExistingChecker/FilesExistingChecker';
-import { SectionChecker } from '../SectionChecker/SectionChecker';
+// import { SectionChecker } from '../SectionChecker/SectionChecker';
 import { BriefCondition } from '../../types/BriefCondtition';
-import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
-import { DEV_MIX } from '../../templates/common';
-import { ScreenshotMatch } from '../ScreenshotMatch/ScreenshotMatch';
+// import { getBodyFromHtmlWithStyle } from '../../utils/html.utils';
+// import { DEV_MIX } from '../../templates/common';
+// import { ScreenshotMatch } from '../ScreenshotMatch/ScreenshotMatch';
 import { idb } from '../../hooks/useIdb';
 import { getFileKey } from '../../utils/idb.utils';
 import { IframeSize } from '../../constants/iframe.constants';
@@ -87,16 +87,17 @@ export const WorkChecker: FC<Props> = ({
         </>
     ) : (
         <>
-            <BriefChecker html={html} css={css} conditions={brief} />
-            <HtmlValidation html={html} />
-            <BemValidation html={html} />
+            {/*<BriefChecker html={html} css={css} conditions={brief} />*/}
+            {/*<HtmlValidation html={html} />*/}
+            {/*<BemValidation html={html} />*/}
+            {window.console.log(fileList)}
             <FilesExistingChecker zip={work} fileList={fileList} />
-            <SectionChecker html={html} sectionList={classList} />
-            <ScreenshotMatch
-                html={getBodyFromHtmlWithStyle(html, css, DEV_MIX)}
-                classNames={classList}
-                workKey={workKey}
-            />
+            {/*<SectionChecker html={html} sectionList={classList} />*/}
+            {/*<ScreenshotMatch*/}
+            {/*    html={getBodyFromHtmlWithStyle(html, css, DEV_MIX)}*/}
+            {/*    classNames={classList}*/}
+            {/*    workKey={workKey}*/}
+            {/*/>*/}
         </>
     );
 
